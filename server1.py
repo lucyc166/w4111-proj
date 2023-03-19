@@ -104,7 +104,7 @@ def admin():
 	print(request.args)
 
 	# query orgs
-	select_query = "SELECT org_name from organizations"
+	select_query = "SELECT * from organizations"
 
 	cursor = g.conn.execute(text(select_query))
 	orgs = []

@@ -25,14 +25,14 @@
   
   {% for org in orgs %}
   <tr>
-    <td>{{ org.org_id }}</td>
-    <td>{{ org.org_name }}</td>
-    <td>{{ org.org_description }}</td>
-    <td>{{ org.org_email }}</td>
-    <td>{{ org.marketing_email }}</td>
-    <td>{{ org.comms_email }}</td>
-    <td>{{ org.finance_email }}</td>
-    <td>{{ org.advisor_email }}</td>
+    <td>{{ organizations[org].org_id }}</td>
+    <td>{{ organizations[org].org_name }}</td>
+    <td>{{ organizations[org].org_description }}</td>
+    <td>{{ organizations[org].org_email }}</td>
+    <td>{{ organizations[org].marketing_email }}</td>
+    <td>{{ organizations[org].comms_email }}</td>
+    <td>{{ organizations[org].finance_email }}</td>
+    <td>{{ organizations[org].advisor_email }}</td>
   </tr>
   {% endfor %}
 </table>
