@@ -1,0 +1,43 @@
+<!-- page to see a list of all tables to test if database works -->
+
+{% extends 'base.html' %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<!-- Table of all orgs + info -->
+<h2>Organizations</h2>
+
+<table>
+  <tr>
+    <th>ORG_ID</th>
+    <th>ORG_NAME</th>
+    <th>ORG_DESCRIPTION</th>
+    <th>ORG_EMAIL</th>
+    <th>MARKETING_EMAIL</th>
+    <th>COMMS_EMAIL</th>
+    <th>FINANCE_EMAIL</th>
+    <th>ADVISOR_EMAIL</th>
+  </tr>
+  
+  {% for org in orgs %}
+  <tr>
+    <td>{{ org.org_id }}</td>
+    <td>{{ org.org_name }}</td>
+    <td>{{ org.org_description }}</td>
+    <td>{{ org.org_email }}</td>
+    <td>{{ org.marketing_email }}</td>
+    <td>{{ org.comms_email }}</td>
+    <td>{{ org.finance_email }}</td>
+    <td>{{ org.advisor_email }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock %}
+
+
