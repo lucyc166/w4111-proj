@@ -109,11 +109,10 @@ def admin():
 	cursor = g.conn.execute(text(select_query))
 	orgs = []
 	for result in cursor:
-            orgs.append(result)
-        print(list(orgs))
-        cursor.close()
-        context = dict(data = orgs)
-
+		orgs.append(result)
+	print(list(orgs))
+	cursor.close()
+	context = dict(data = orgs)
 	return render_template("admin.html", **context)
 
 # Example of adding new data to the database
