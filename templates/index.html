@@ -17,6 +17,16 @@ The main content area of the homepage will have Future Events and Past Events, a
 
 <!-- Form to add org -->
 <h2>Add Organization</h2>
+<table>
+    {% for row in orgs %}
+    <tr>
+      {% for col in row %}
+      <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
 <!-- ** add labels to these form inputs? & figure out how to link w database -->
 <h2>Add an Organization</h2>
 <form method = "POST" action = ""><!-- ** figure out what to put for action -->
