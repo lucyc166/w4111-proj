@@ -18,18 +18,8 @@ tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
 
-#
-# The following is a dummy URI that does not connect to a valid database. You will need to modify it to connect to your Part 2 database in order to use the data.
-#
-# XXX: The URI should be in the format of: 
-#
-#     postgresql://USER:PASSWORD@34.73.36.248/project1
-#
-# For example, if you had username zy2431 and password 123123, then the following line would be:
-#
-#     DATABASEURI = "postgresql://zy2431:123123@34.73.36.248/project1"
-#
-# Modify these with your own credentials you received from TA!
+# XXX: The URI should be in the format of: postgresql://USER:PASSWORD@34.73.36.248/project1
+
 DATABASE_USERNAME = "apl2171"
 DATABASE_PASSWRD = "5567"
 DATABASE_HOST = "34.148.107.47" # change to 34.28.53.86 if you used database 2 for part 2
@@ -102,77 +92,29 @@ def teardown_request(exception):
 #
 @app.route('/')
 def index():
-	"""
-	request is a special object that Flask provides to access web request information:
+	return render_template("index.html")
 
-	request.method:   "GET" or "POST"
-	request.form:     if the browser submitted a form, this contains the data in the form
-	request.args:     dictionary of URL arguments, e.g., {a:1, b:2} for http://localhost?a=1&b=2
-
-	See its API: https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data
-	"""
-
-	# DEBUG: this is debugging code to see what request looks like
-	print(request.args)
-
-
-	#
-	# example of a database query
-	#
-	select_query = "SELECT name from test"
-	cursor = g.conn.execute(text(select_query))
-	names = []
-	for result in cursor:
-		names.append(result[0])
-	cursor.close()
-
-	#
-	# Flask uses Jinja templates, which is an extension to HTML where you can
-	# pass data to a template and dynamically generate HTML based on the data
-	# (you can think of it as simple PHP)
-	# documentation: https://realpython.com/primer-on-jinja-templating/
-	#
-	# You can see an example template in templates/index.html
-	#
-	# context are the variables that are passed to the template.
-	# for example, "data" key in the context variable defined below will be 
-	# accessible as a variable in index.html:
-	#
-	#     # will print: [u'grace hopper', u'alan turing', u'ada lovelace']
-	#     <div>{{data}}</div>
-	#     
-	#     # creates a <div> tag for each element in data
-	#     # will print: 
-	#     #
-	#     #   <div>grace hopper</div>
-	#     #   <div>alan turing</div>
-	#     #   <div>ada lovelace</div>
-	#     #
-	#     {% for n in data %}
-	#     <div>{{n}}</div>
-	#     {% endfor %}
-	#
-	context = dict(data = names)
-
-
-	#
-	# render_template looks in the templates/ folder for files.
-	# for example, the below file reads template/index.html
-	#
-	return render_template("index.html", **context)
-
-#
-# This is an example of a different path.  You can see it at:
-# 
-#     localhost:8111/another
-#
-# Notice that the function name is another() rather than index()
-# The functions for each app.route need to have different names
-#
 @app.route('/another')
 def another():
 	return render_template("another.html")
 
+@app.route('/admin')
+def admin():
+	# DEBUG: this is debugging code to see what request looks like
+	print(request.args)
+
+	# query orgs
+	select_query = "SELECT * from Orgs"
+
+	cursor = g.conn.execute(text(select_query))
+	orgs = []
+	for result in cursor:
+		orgs.append(result[0])
+	cursor.close()
+
+	context = dict(data = orgs)
+
+	return render_template("admin.html", **orgs)
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
