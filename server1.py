@@ -103,6 +103,7 @@ def hub():
 	orgs = []
 	for result in cursor:
 		orgs.append(result)
+	print(orgs)
 	return render_template("hub.html", orgs = orgs)
 
 @app.route('/login')
