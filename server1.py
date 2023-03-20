@@ -92,6 +92,7 @@ def teardown_request(exception):
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
 user_id = ""
+email = ""
 
 @app.route('/')
 def index():
@@ -116,6 +117,7 @@ def login():
 @app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
 	if request.method == "POST":
+		global email
 		# getting input with name = fname in HTML form
 		email = request.form.get("email")
 		# getting input with name = lname in HTML form
@@ -132,7 +134,7 @@ def login_submit():
 		# otherwise, show a custom user hub page
 		else:
 			global user_id
-			user_id = cursor.fetchone()
+			user_id = cursor.fetchone()[0]
 			print(user_id)
 			return redirect("hub", code = 303)
 			#return render_template("hub.html", email = email, user_id = user_id)
