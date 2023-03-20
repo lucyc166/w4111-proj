@@ -22,7 +22,7 @@ The main content area of the homepage will have Future Events and Past Events, a
 <!-- Form to add org -->
 <h2>Your Organizations</h2>
 
-{% for org in orgs_list %}
+{% for org in orgs %}
 <p><a href="/org/{{org[0]}}">{{ org[1] }}</a></p>
 
 {% endfor %}
