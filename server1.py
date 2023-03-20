@@ -90,13 +90,20 @@ def teardown_request(exception):
 # see for routing: https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
+global user_id
+
 @app.route('/')
 def index():
 	return render_template("index.html")
 
 @app.route('/hub')
 def hub():
-	return render_template("hub.html")
+	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" (user_id)
+	cursor = g.conn.execute(text(select_query))
+	orgs = []
+	for result in cursor:
+		orgs.append(result)
+	return render_template("hub.html", orgs = orgs)
 
 @app.route('/login')
 def login():
@@ -111,16 +118,17 @@ def login_submit():
 		password = request.form.get("password")
 		
 		# check if email and password are in the database
-		select_query = "SELECT * FROM users WHERE user_email = '%s' AND password = '%s'" % (email, password)
+		select_query = "SELECT user_id FROM users WHERE user_email = %s AND password = %s" % (email, password)
 		cursor = g.conn.execute(text(select_query))
+
+		# if empty query (no match), refresh login page with error
 		if cursor.rowcount == 0: # empty query 
 			return render_template("login.html", access = "The email or password was incorrect. Please try again.")
+		
+		# otherwise, show a custom user hub page
 		else:
-			return render_template("hub.html", email = email)
-
-	## else...render-template to 
-	##      return "Your name is "+first_name + last_name
-    ##return render_template("form.html")
+			user_id = cursor.fetchone()
+			return render_template("hub.html", email = email, user_id = user_id)
 
 
 @app.route('/admin')
