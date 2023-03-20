@@ -106,7 +106,7 @@ def hub():
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-	return render_template("hub.html", orgs = orgs)
+	return render_template("hub.html", orgs = orgs, user_id = user_id)
 
 @app.route('/login')
 def login():
@@ -131,7 +131,8 @@ def login_submit():
 		# otherwise, show a custom user hub page
 		else:
 			user_id = cursor.fetchone()
-			return render_template("hub.html", email = email, user_id = user_id)
+			return redirect("hub", code = 303)
+			#return render_template("hub.html", email = email, user_id = user_id)
 			## ** FIGURE HOW TO REROUTE THIS TO APP.ROUTE (HUB) so the org queries show up
 
 @app.route('/admin')
