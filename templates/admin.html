@@ -8,13 +8,18 @@
 
 {% block body %}
 
-<!-- Table of all users + info -->
-<h2>Users</h2>
+<!-- Table of all orgs + info -->
+<h2>Organizations</h2>
 <table>
   <tr>
-    <th>USER_ID</th>
-    <th>USER_EMAIL</th>
-    <th>PASSWORD</th>
+    <th>ORG_ID</th>
+    <th>ORG_NAME</th>
+    <th>ORG_DESCRIPTION</th>
+    <th>ORG_EMAIL</th>
+    <th>MARKETING_EMAIL</th>
+    <th>COMMS_EMAIL</th>
+    <th>FINANCE_EMAIL</th>
+    <th>ADVISOR_EMAIL</th>
   </tr>
 
   {% for row in orgs %}
@@ -26,6 +31,23 @@
   {% endfor %}
 </table>
 
+<!-- Table of all users + info -->
+<h2>Users</h2>
+<table>
+  <tr>
+    <th>USER_ID</th>
+    <th>USER_EMAIL</th>
+    <th>PASSWORD</th>
+  </tr>
+
+  {% for row in users %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
 
 {% endblock %}
  
