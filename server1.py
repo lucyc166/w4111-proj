@@ -95,11 +95,11 @@ def index():
 	return render_template("index.html")
 
 @app.route('/hub')
-def another():
+def hub():
 	return render_template("hub.html")
 
 @app.route('/login')
-def another():
+def login():
 	return render_template("login.html")
 
 @app.route('/login_submit', methods =["GET", "POST"])
