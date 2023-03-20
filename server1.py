@@ -112,8 +112,7 @@ def admin():
 		orgs.append(result)
 	print(list(orgs))
 	cursor.close()
-	context = dict(orgs = orgs)
-	return render_template("admin.html", **context)
+	return render_template("admin.html", orgs = orgs)
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
