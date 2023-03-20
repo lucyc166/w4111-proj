@@ -91,7 +91,6 @@ def teardown_request(exception):
 # see for routing: https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
-global user_id
 user_id = ""
 
 @app.route('/')
@@ -132,6 +131,7 @@ def login_submit():
 		
 		# otherwise, show a custom user hub page
 		else:
+			global user_id
 			user_id = cursor.fetchone()
 			print(user_id)
 			return redirect("hub", code = 303)
