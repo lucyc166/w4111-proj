@@ -94,11 +94,11 @@ def teardown_request(exception):
 def index():
 	return render_template("index.html")
 
-@app.route('/another')
+@app.route('/hub')
 def another():
-	return render_template("another.html")
-@app.route('/', methods =["GET", "POST"])
+	return render_template("hub.html")
 
+@app.route('/login', methods =["GET", "POST"])
 def login_submit():
     if request.method == "POST":
        # getting input with name = fname in HTML form
@@ -147,11 +147,6 @@ def add():
 	g.conn.commit()
 	return redirect('/')
 
-
-@app.route('/login')
-def login():
-	abort(401)
-	this_is_never_executed()
 
 
 if __name__ == "__main__":
