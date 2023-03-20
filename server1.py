@@ -117,7 +117,7 @@ def hub():
 	print(select_query)
 	orgs_list = []
 	for result in cursor:
-		orgs_list.append("<a href='/org/%s'>%s</a>" % result[0], result[1])
+		orgs_list.append("<a href=\"/org/%s\">%s</a>" % (result[0], result[1]))
 	print(orgs_list)
 	return render_template("hub.html", orgs = orgs, user_id = user_id, orgs_list=orgs_list, email = email)
 
