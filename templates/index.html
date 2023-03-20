@@ -1,7 +1,5 @@
 <!-- 
-On the home page, there will be a sidebar with a list of the Organizations the user is affiliated with. 
-It will also have an Add Organization button. 
-The main content area of the homepage will have Future Events and Past Events, and some basic information about each (title, host organization, etc).
+This will have all of the links.
 -->
 
 {% extends 'base.html' %}
@@ -11,35 +9,10 @@ The main content area of the homepage will have Future Events and Past Events, a
 {% endblock %}
 
 {% block body %}
-<!-- ** somewhere here, grab the user_id and use it to generate the query for orgs the user is affiliated with -->
-
-
-
-<!-- Form to add org -->
-<h2>Add Organization</h2>
-<table>
-    {% for row in orgs %}
-    <tr>
-      {% for col in row %}
-      <td>{{ col }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
-
-<!-- ** add labels to these form inputs? & figure out how to link w database -->
-<h2>Add an Organization</h2>
-<form method = "POST" action = ""><!-- ** figure out what to put for action -->
-<p> Organization Name: <input type = "text" /></p>
-<p> Organization Description: <textarea rows = "4" cols = "50"></textarea></p>
-<p> Organization Email: <input type = "text" /></p>
-<p> Marketing Email: <input type = "text" /></p>
-<p> Comms Email: <input type = "text" /></p>
-<p> Finance Email: <input type = "text" /></p>
-<p> Advisor Email: <input type = "text" /></p>
-<p><button type="submit">Submit</button></p>
-
+<h1>Welcome to the Columbia Event Management System!</h1>
+<h3>Visit the sites below</h3>
 <p><a href="admin">Go to the admin page</a></p>
-
+<p><a href="login">Go to the login page</a></p>
+<p><a href="hub">Go to the user hub</a></p>
 
 {% endblock %}

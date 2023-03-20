@@ -97,6 +97,20 @@ def index():
 @app.route('/another')
 def another():
 	return render_template("another.html")
+@app.route('/', methods =["GET", "POST"])
+
+def login_submit():
+    if request.method == "POST":
+       # getting input with name = fname in HTML form
+       email = request.form.get("email")
+       # getting input with name = lname in HTML form
+       password = request.form.get("password")
+	   ## if email and password are in the database
+    return render_template("hub.html", email = email)
+	## else...render-template to 
+	##      return "Your name is "+first_name + last_name
+    ##return render_template("form.html")
+
 
 @app.route('/admin')
 def admin():
