@@ -98,7 +98,11 @@ def index():
 def another():
 	return render_template("hub.html")
 
-@app.route('/login', methods =["GET", "POST"])
+@app.route('/login')
+def another():
+	return render_template("login.html")
+
+@app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
     if request.method == "POST":
        # getting input with name = fname in HTML form
