@@ -6,10 +6,9 @@
 
 {% block body %}
 <!-- Form to add org -->
-{% for org in orgs %}
 
 <h2>{{ org.org_name }}</h2>
-
+{% for org in orgs %}
 <table>
     <tr>
       <th>ORG_ID</th>
@@ -25,7 +24,7 @@
     </tr>
     <tr>
         <th>MARKETING_EMAIL</th>
-        <th> {{ org.maketing_email }}</th>
+        <th> {{ org.marketing_email }}</th>
     </tr>
     <tr>
         <th>COMMS_EMAIL</th>
@@ -42,6 +41,23 @@
   </table>
 
 {% endfor %}
+
+
+<h2>{{ Users }}</h2>
+<table>
+<tr>
+    <th>USER_ID</th>
+    <th>USER_EMAIL</th>
+  </tr>
+{% for user in users %}
+<tr>
+    <th>user.user_id</th>
+    <th>user.user_email</th>
+</tr>
+{% endfor %}
+</table>
+   
+
 {% endblock %}
 
 

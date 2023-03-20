@@ -110,16 +110,7 @@ def hub():
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-
-	#grabbing list of org names + urls affiliated with user
-	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" % (user_id)
-	cursor = g.conn.execute(text(select_query))
-	print(select_query)
-	orgs_list = []
-	for result in cursor:
-		orgs_list.append("<a href=\"/org/%s\">%s</a>" % (result[0], result[1]))
-	print(orgs_list)
-	return render_template("hub.html", orgs = orgs, user_id = user_id, orgs_list=orgs_list, email = email)
+	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email)
 
 @app.route('/login')
 def login():
@@ -128,6 +119,8 @@ def login():
 # url routing for custom org page
 @app.route('/org/<org_id>')
 def profile(org_id):
+
+	# grab org info from sql query
 	select_query = "SELECT * FROM organizations WHERE org_id = '%s'" % (org_id)
 	cursor = g.conn.execute(text(select_query))
 	print(select_query)
@@ -135,7 +128,16 @@ def profile(org_id):
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-	return render_template("org_profile.html", orgs = orgs)
+
+	# grab users affiliated with org from query
+	select_query = "SELECT user_id, user_email, password * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE org_id = '%s'" % (org_id)
+	cursor = g.conn.execute(text(select_query))
+	print(select_query)
+	users = []
+	for result in cursor:
+		users.append(result)
+		
+	return render_template("org_profile.html", orgs = orgs, users = users)
 
 @app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
