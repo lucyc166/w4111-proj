@@ -99,7 +99,7 @@ def index():
 @app.route('/hub')
 def hub():
 	print(user_id)
-	select_query = "SELECT * FROM organizations"
+	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" (user_id)
 	cursor = g.conn.execute(text(select_query))
 	print(select_query)
 	orgs = []
@@ -132,7 +132,7 @@ def login_submit():
 		else:
 			user_id = cursor.fetchone()
 			return render_template("hub.html", email = email, user_id = user_id)
-
+			## ** FIGURE HOW TO REROUTE THIS TO APP.ROUTE (HUB) so the org queries show up
 
 @app.route('/admin')
 def admin():
