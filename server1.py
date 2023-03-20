@@ -98,8 +98,10 @@ def index():
 
 @app.route('/hub')
 def hub():
+	print(user_id)
 	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" (user_id)
 	cursor = g.conn.execute(text(select_query))
+	print(select_query)
 	orgs = []
 	for result in cursor:
 		orgs.append(result)
