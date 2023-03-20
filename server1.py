@@ -101,6 +101,8 @@ def index():
 @app.route('/hub')
 def hub():
 	print(user_id)
+
+	#grabbing list of orgs affiliated with user
 	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" % (user_id)
 	cursor = g.conn.execute(text(select_query))
 	print(select_query)
@@ -108,7 +110,16 @@ def hub():
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-	return render_template("hub.html", orgs = orgs, user_id = user_id)
+
+	#grabbing list of org names + urls affiliated with user
+	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" % (user_id)
+	cursor = g.conn.execute(text(select_query))
+	print(select_query)
+	orgs_list = []
+	for result in cursor:
+		orgs_list.append("<a href='/org/%s'>%s</a>" % result[0], result[1])
+	print(orgs_list)
+	return render_template("hub.html", orgs = orgs, user_id = user_id, orgs_list=orgs_list, email = email)
 
 @app.route('/login')
 def login():

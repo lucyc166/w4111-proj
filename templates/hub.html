@@ -21,6 +21,12 @@ The main content area of the homepage will have Future Events and Past Events, a
 
 <!-- Form to add org -->
 <h2>Your Organizations</h2>
+
+{% for org in orgs_list %}
+<p>{{ org }}</p>
+{% endfor %}
+</table>
+
 <table>
     <tr>
       <th>ORG_ID</th>
