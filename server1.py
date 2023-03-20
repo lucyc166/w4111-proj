@@ -105,14 +105,20 @@ def admin():
 
 	# query orgs
 	select_query = "SELECT * from organizations"
-
 	cursor = g.conn.execute(text(select_query))
 	orgs = []
 	for result in cursor:
 		orgs.append(result)
-	print(list(orgs))
+
+	# query users
+	select_query = "SELECT * from users"
+	cursor = g.conn.execute(text(select_query))
+	users = []
+	for result in cursor:
+		users.append(result)
+
 	cursor.close()
-	return render_template("admin.html", orgs = orgs)
+	return render_template("admin.html", orgs = orgs, users = users)
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
