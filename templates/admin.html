@@ -10,6 +10,15 @@
 
 <!-- Table of all orgs + info -->
 <h2>Organizations</h2>
+<table>
+  {% for row in orgs %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
 
 <table>
   <tr>
