@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<!-- Form to add org -->
+<h2>{{ orgs.org_name }}</h2>
+
+<table>
+    <tr>
+      <th>ORG_ID</th>
+      <th> {{ orgs.org_id }}</th>
+    </tr>
+    <tr>
+        <th>ORG_DESCRIPTION</th>
+        <th> {{ orgs.ORG_DESCRIPTION }}</th>
+    </tr>
+    <tr>
+        <th>ORG_EMAIL</th>
+        <th> {{ orgs.ORG_EMAIL }}</th>
+    </tr>
+    <tr>
+        <th>MARKETING_EMAIL</th>
+        <th> {{ orgs.MARKETING_EMAIL }}</th>
+    </tr>
+    <tr>
+        <th>COMMS_EMAIL</th>
+        <th> {{ orgs.COMMS_EMAIL }}</th>
+    </tr>
+    <tr>
+        <th>FINANCE_EMAIL</th>
+        <th> {{ orgs.FINANCE_EMAIL }}</th>
+    </tr>
+    <tr>
+        <th>ADVISOR_EMAIL</th>
+        <th> {{ orgs.ADVISOR_EMAIL }}</th>
+    </tr>
+  </table>
+{% endblock %}
+
+

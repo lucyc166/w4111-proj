@@ -114,6 +114,18 @@ def hub():
 def login():
 	return render_template("login.html")
 
+# url routing for custom org page
+@app.route('/org/<org_id>')
+def profile(org_id):
+	select_query = "SELECT * FROM organizations WHERE org_id = '%s'" % (org_id)
+	cursor = g.conn.execute(text(select_query))
+	print(select_query)
+	orgs = []
+	for result in cursor:
+		orgs.append(result)
+	print(orgs)
+	return render_template("org_profile.html", orgs = orgs)
+
 @app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
 	if request.method == "POST":
