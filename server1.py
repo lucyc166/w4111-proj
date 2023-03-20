@@ -104,13 +104,20 @@ def login():
 
 @app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
-    if request.method == "POST":
-       # getting input with name = fname in HTML form
-       email = request.form.get("email")
-       # getting input with name = lname in HTML form
-       password = request.form.get("password")
-	   ## if email and password are in the database
-    return render_template("hub.html", email = email)
+	if request.method == "POST":
+		# getting input with name = fname in HTML form
+		email = request.form.get("email")
+		# getting input with name = lname in HTML form
+		password = request.form.get("password")
+		
+		# check if email and password are in the database
+		select_query = "SELECT * FROM users WHERE email = %s AND password = %s" % (email, password)
+		cursor = g.conn.execute(text(select_query))
+		if cursor.rowcount == 0: # empty query 
+			return render_template("login.html", access = "The email or password was incorrect. Please try again.")
+		else:
+			return render_template("hub.html", email = email)
+
 	## else...render-template to 
 	##      return "Your name is "+first_name + last_name
     ##return render_template("form.html")
@@ -122,14 +129,14 @@ def admin():
 	print(request.args)
 
 	# query orgs
-	select_query = "SELECT * from organizations"
+	select_query = "SELECT * FROM organizations"
 	cursor = g.conn.execute(text(select_query))
 	orgs = []
 	for result in cursor:
 		orgs.append(result)
 
 	# query users
-	select_query = "SELECT * from users"
+	select_query = "SELECT * FROM users"
 	cursor = g.conn.execute(text(select_query))
 	users = []
 	for result in cursor:
