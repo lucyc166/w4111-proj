@@ -139,6 +139,8 @@ def profile(org_id):
 		
 	return render_template("org_profile.html", orgs = orgs, users = users)
 
+@app.route('/org/<event_id>')
+
 @app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
 	if request.method == "POST":
