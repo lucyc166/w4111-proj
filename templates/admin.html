@@ -10,6 +10,14 @@
 
 <!-- Table of all orgs + info -->
 <h2>Organizations</h2>
+<div>{{orgs}}</div>
+
+<div>
+  {% for n in orgs %}
+  <div>{{n}}</div>
+  {% endfor %}
+</div>
+<h2> test</h2>
 <table>
   {% for row in orgs %}
   <tr>
@@ -19,7 +27,7 @@
   </tr>
   {% endfor %}
 </table>
-
+<h2> test2</h2>
 <table>
   <tr>
     <th>ORG_ID</th>
@@ -34,14 +42,14 @@
   
   {% for org in orgs %}
   <tr>
-    <td>{{ organizations[org].org_id }}</td>
-    <td>{{ organizations[org].org_name }}</td>
-    <td>{{ organizations[org].org_description }}</td>
-    <td>{{ organizations[org].org_email }}</td>
-    <td>{{ organizations[org].marketing_email }}</td>
-    <td>{{ organizations[org].comms_email }}</td>
-    <td>{{ organizations[org].finance_email }}</td>
-    <td>{{ organizations[org].advisor_email }}</td>
+    <td>{{ org.org_id }}</td>
+    <td>{{ org.org_name }}</td>
+    <td>{{ org.org_description }}</td>
+    <td>{{ org.org_email }}</td>
+    <td>{{ org.marketing_email }}</td>
+    <td>{{ org.comms_email }}</td>
+    <td>{{ org.finance_email }}</td>
+    <td>{{ org.advisor_email }}</td>
   </tr>
   {% endfor %}
 </table>

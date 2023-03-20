@@ -112,7 +112,7 @@ def admin():
 		orgs.append(result)
 	print(list(orgs))
 	cursor.close()
-	context = dict(data = orgs)
+	context = dict(orgs = orgs)
 	return render_template("admin.html", **context)
 
 # Example of adding new data to the database
