@@ -118,7 +118,7 @@ def login_submit():
 		password = request.form.get("password")
 		
 		# check if email and password are in the database
-		select_query = "SELECT user_id FROM users WHERE user_email = %s AND password = %s" % (email, password)
+		select_query = "SELECT user_id FROM users WHERE user_email = '%s' AND password = '%s'" % (email, password)
 		cursor = g.conn.execute(text(select_query))
 
 		# if empty query (no match), refresh login page with error
