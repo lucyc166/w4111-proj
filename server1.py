@@ -8,6 +8,7 @@ Go to http://localhost:8111 in your browser.
 A debugger such as "pdb" may be helpful for debugging.
 Read about it online.
 """
+
 import os
   # accessible as a variable in index.html:
 from sqlalchemy import *
@@ -91,6 +92,7 @@ def teardown_request(exception):
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
 global user_id
+user_id = ""
 
 @app.route('/')
 def index():
@@ -99,7 +101,7 @@ def index():
 @app.route('/hub')
 def hub():
 	print(user_id)
-	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" (user_id)
+	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE user_id = '%s'" % (user_id)
 	cursor = g.conn.execute(text(select_query))
 	print(select_query)
 	orgs = []
@@ -131,6 +133,7 @@ def login_submit():
 		# otherwise, show a custom user hub page
 		else:
 			user_id = cursor.fetchone()
+			print(user_id)
 			return redirect("hub", code = 303)
 			#return render_template("hub.html", email = email, user_id = user_id)
 			## ** FIGURE HOW TO REROUTE THIS TO APP.ROUTE (HUB) so the org queries show up
