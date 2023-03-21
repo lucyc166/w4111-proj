@@ -3,7 +3,7 @@
 Columbia's COMS W4111.001 Introduction to Databases
 Example Webserver
 To run locally:
-    python server.py
+	python server.py
 Go to http://localhost:8111 in your browser.
 A debugger such as "pdb" may be helpful for debugging.
 Read about it online.
@@ -195,32 +195,39 @@ def admin():
 @app.route('/add_org', methods=["GET", "POST"])
 def add_org():
 	# accessing form inputs from user
-    org_name = request.form.get("org_name")
-    org_desc = request.form.get("org_desc")
-    org_email = request.form.get("org_email")
-    marketing_email = request.form.get("marketing_email")
-    comms_email = request.form.get("comms_email")
-    finance_email = request.form.get("finance_email")
-    advisor_email = request.form.get("advisor_email")
-	
+	org_name = request.form.get("org_name")
+	org_desc = request.form.get("org_desc")
+	org_email = request.form.get("org_email")
+	marketing_email = request.form.get("marketing_email")
+	comms_email = request.form.get("comms_email")
+	finance_email = request.form.get("finance_email")
+	advisor_email = request.form.get("advisor_email")
+	'''
+	org_info = []
+	org_info.extend[org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email]
+	for i in range(len(org_info)):
+		if org_info[i] == "":
+			org_info[i] = null
+   '''
+
 	# new org_id is highest org_id + 1
-    select_query = "SELECT max(org_id) FROM organizations"
-    cursor = g.conn.execute(text(select_query))
-    org_id = str(int(cursor.fetchone()[0]) + 1)
+	select_query = "SELECT max(org_id) FROM organizations"
+	cursor = g.conn.execute(text(select_query))
+	org_id = str(int(cursor.fetchone()[0]) + 1).zfill(4) # fill with leading 0's [0001, 0002]
 
 	# query to add org to organizations table
-    select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
-    print(select_query)
-    g.conn.execute(text(select_query))
-    g.conn.commit()
+	select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
+	print(select_query)
+	g.conn.execute(text(select_query))
+	g.conn.commit()
 
 	# query to add affiliated_with linking logged in user w/ org
-    select_query = "INSERT INTO affiliated_with (user_id, org_id) VALUES ('%s', '%s')" % (user_id, org_id)
-    print(select_query)
-    g.conn.execute(text(select_query))
-    g.conn.commit()
+	select_query = "INSERT INTO affiliated_with (user_id, org_id) VALUES ('%s', '%s')" % (user_id, org_id)
+	print(select_query)
+	g.conn.execute(text(select_query))
+	g.conn.commit()
 
-    return redirect('/hub')
+	return redirect('/hub')
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
