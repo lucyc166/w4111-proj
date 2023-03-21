@@ -130,13 +130,13 @@ def profile(org_id):
 	print(orgs)
 
 	# grab users affiliated with org from query
-	select_query = "SELECT user_id, user_email, password * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id WHERE org_id = '%s'" % (org_id)
+	select_query = "SELECT u.user_id, u.user_email, u.password  FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id JOIN users u on aw.user_id = u.user_id WHERE o.org_id = '%s'" % (org_id)
 	cursor = g.conn.execute(text(select_query))
 	print(select_query)
 	users = []
 	for result in cursor:
 		users.append(result)
-		
+	print(result)	
 	return render_template("org_profile.html", orgs = orgs, users = users)
 
 @app.route('/org/<event_id>')

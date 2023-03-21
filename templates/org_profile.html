@@ -44,7 +44,8 @@
 {% endfor %}
 
 
-<h2>{{ Users }}</h2>
+<h2>Users</h2>
+
 <table>
 <tr>
     <th>USER_ID</th>
@@ -52,8 +53,8 @@
   </tr>
 {% for user in users %}
 <tr>
-    <th>user.user_id</th>
-    <th>user.user_email</th>
+	<th>{{user[0]}}</th>
+	<th>{{user[1]}}</th>
 </tr>
 {% endfor %}
 </table>
