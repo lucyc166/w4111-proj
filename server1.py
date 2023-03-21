@@ -149,7 +149,7 @@ def org_profile(org_id):
 	print(result)	
 
 	# grab events affiliated with org
-	select_query = "SELECT E.event_id, E.title FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s'" % (org_id)
+	select_query = "SELECT E.event_id, E.title, E.approved, E.liason_name, E.liason_email, E.description, E.location, E.datetime_start, E.datetime_end, E.budget FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s'" % (org_id)
 	cursor = g.conn.execute(text(select_query))
 	events = []
 	for result in cursor:
