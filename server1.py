@@ -141,7 +141,21 @@ def profile(org_id):
 	print(result)	
 	return render_template("org_profile.html", orgs = orgs, users = users)
 
-@app.route('/org/<event_id>')
+# url routing for custom events page
+@app.route('/event/<event_id>')
+def profile(event_id):
+
+	# grab org info from sql query
+	select_query = "SELECT * FROM events WHERE event_id = '%s'" % (event_id)
+	cursor = g.conn.execute(text(select_query))
+	print(select_query)
+	events = []
+	for result in cursor:
+		events.append(result)
+	print(events)
+
+	return render_template("event_profile.html", events = events)
+
 
 @app.route('/login_submit', methods =["GET", "POST"])
 def login_submit():
@@ -259,7 +273,7 @@ def add_org():
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # add expenses form
-@app.route('<event_id>/add_expense', methods=["GET", "POST"])
+@app.route('/<event_id>/add_expense', methods=["GET", "POST"])
 def add_expense():
 	event_id = request.script_root[1:] # grab event_id from url
 	# accessing form inputs from user
@@ -281,8 +295,8 @@ def add_expense():
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # update expenses form
-@app.route('<event_id>/update_expense', methods=["GET", "POST"])
-def add_expense():
+@app.route('/<event_id>/update_expense', methods=["GET", "POST"])
+def update_expense():
 	event_id = request.script_root[1:] # grab event_id from url
 	item_id = request.form.get("item_id")
 

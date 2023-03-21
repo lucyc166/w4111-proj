@@ -24,31 +24,15 @@ The main content area of the homepage will have Future Events and Past Events, a
 
 {% for org in orgs %}
 <p><a href="/org/{{org[0]}}">{{ org[1] }}</a></p>
-
 {% endfor %}
 
-</table>
 
-<table>
-    <tr>
-      <th>ORG_ID</th>
-      <th>ORG_NAME</th>
-      <th>ORG_DESCRIPTION</th>
-      <th>ORG_EMAIL</th>
-      <th>MARKETING_EMAIL</th>
-      <th>COMMS_EMAIL</th>
-      <th>FINANCE_EMAIL</th>
-      <th>ADVISOR_EMAIL</th>
-    </tr>
-  
-    {% for row in orgs %}
-    <tr>
-      {% for col in row %}
-      <td>{{ col }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
+<h2>Your Events</h2>
+
+{% for event in events %}
+<p><a href="/event/{{event[0]}}">{{ event[1] }}</a></p>
+{% endfor %}
+
   
 <!-- ** add labels to these form inputs? & figure out how to link w database -->
 <h2>Add an Organization</h2>
@@ -60,20 +44,6 @@ The main content area of the homepage will have Future Events and Past Events, a
 <p> Comms Email: <input type = "text" name = "comms_email"/></p>
 <p> Finance Email: <input type = "text" name = "finance_email"/></p>
 <p> Advisor Email: <input type = "text" name = "advisor_email"/></p>
-<p><button type="submit">Submit</button></p>
-
-<h2>Add an Expense</h2>
-<form action="{{ url_for('add_expense') }}" method = "POST"> <!--*** insert event id into this statement somehow-->
-<p> Item Name: <input type = "text" name = "item_name" required/></p>
-<p> Item Cost: <input type = "text" name = "cost" required/></p>
-<p><button type="submit">Submit</button></p>
-
-<h2>Update an Expense</h2>
-<form action="{{ url_for('update_expense') }}" method = "POST"> <!--*** insert event id into this statement somehow-->
-<p> Item ID: <input type = "text" name = "item_id" required/></p>
-<p> If you wish to delete this event, check the following box and leave the rest empty. <input type = "checkbox" name = "delete_request"/></p>
-<p> Item Name: <input type = "text" name = "item_name" required/></p>
-<p> Item Cost: <input type = "text" name = "cost" required/></p>
 <p><button type="submit">Submit</button></p>
 
 <p><a href="admin">Go to the admin page</a></p>
