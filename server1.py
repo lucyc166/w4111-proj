@@ -173,7 +173,7 @@ def login_submit():
 def admin():
 	# DEBUG: this is debugging code to see what request looks like
 	print(request.args)
-
+	## * figure out how to condense this
 	# query orgs
 	select_query = "SELECT * FROM organizations"
 	cursor = g.conn.execute(text(select_query))
@@ -187,9 +187,37 @@ def admin():
 	users = []
 	for result in cursor:
 		users.append(result)
+  
+  	# query events
+	select_query = "SELECT * FROM events"
+	cursor = g.conn.execute(text(select_query))
+	events = []
+	for result in cursor:
+		events.append(result)
+  
+  	# query expenses
+	select_query = "SELECT * FROM expenses"
+	cursor = g.conn.execute(text(select_query))
+	expenses = []
+	for result in cursor:
+		expenses.append(result)
+  
+	# query financiers
+	select_query = "SELECT * FROM financiers"
+	cursor = g.conn.execute(text(select_query))
+	financiers = []
+	for result in cursor:
+		financiers.append(result)
 
+	# query affiliates
+	select_query = "SELECT * FROM affiliates"
+	cursor = g.conn.execute(text(select_query))
+	affiliates = []
+	for result in cursor:
+		affiliates.append(result)
+  
 	cursor.close()
-	return render_template("admin.html", orgs = orgs, users = users)
+	return render_template("admin.html", orgs = orgs, users = users, events=events,expenses=expenses, financiers=financiers, affiliates=affiliates)
 
 # add org form
 @app.route('/add_org', methods=["GET", "POST"])
@@ -228,6 +256,55 @@ def add_org():
 	g.conn.commit()
 
 	return redirect('/hub')
+
+## ** Figure how to link this to the event_id of the event it's affiliated with !!!
+# add expenses form
+@app.route('<event_id>/add_expense', methods=["GET", "POST"])
+def add_expense():
+	event_id = request.script_root[1:] # grab event_id from url
+	# accessing form inputs from user
+	item_name = request.form.get("item_name")
+	cost = request.form.get("cost")
+
+	# new expense_id is highest expense_id + 1
+	select_query = "SELECT max(item_id) FROM expenses"
+	cursor = g.conn.execute(text(select_query))
+	item_id = str((cursor.fetchone()[0]) + 1)
+
+	# query to add org to expenses table
+	select_query = "INSERT INTO expenses (item_id, event_id, item_name, cost) VALUES ('%s', '%s', '%s', '%s')" % (item_id, event_id, item_name, cost)
+	print(select_query)
+	g.conn.execute(text(select_query))
+	g.conn.commit()
+
+	return redirect('/<event_id>')
+
+## ** Figure how to link this to the event_id of the event it's affiliated with !!!
+# update expenses form
+@app.route('<event_id>/update_expense', methods=["GET", "POST"])
+def add_expense():
+	event_id = request.script_root[1:] # grab event_id from url
+	item_id = request.form.get("item_id")
+
+	if request.form.get("delete_request") != None: # delete box is checked
+		# query to remove expense from expenses table
+		select_query = "DELETE from expenses WHERE item_id = '%s' and event_id = '%s'" % (item_id, event_id)
+		print(select_query)
+		g.conn.execute(text(select_query))
+		g.conn.commit()
+		
+	else: 
+		# accessing form inputs from user
+		item_name = request.form.get("item_name")
+		cost = request.form.get("cost")
+
+		# query to add expense to expenses table
+		select_query = "UPDATE expenses SET item_name = '%s', cost = '%s' WHERE item_id = '%s' and event_id = '%s'" % (item_name, cost, item_id, event_id)
+		print(select_query)
+		g.conn.execute(text(select_query))
+		g.conn.commit()
+
+	return redirect('/<event_id>')
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])

@@ -34,22 +34,34 @@
   {% endfor %}
 </table>
 
-<!-- Table of all users + info -->
 
-
-<h2>Users</h2>
+<!-- Table of all events + info -->
+<h2>Events</h2>
 <table>
-{% for row in users %}
-<tr>
-  {% for col in row %}
-  <td>{{ col }}</td>
+  <tr>
+    <th>EVENT_ID</th>
+    <th>TITLE</th>
+    <th>APPROVED</th>
+    <th>LIASON_NAME</th>
+    <th>LIASON_EMAIL</th>
+    <th>DESCRIPTION</th>
+    <th>LOCATION</th>
+    <th>DATETIME_START</th>
+    <th>DATETIME_END</th>
+    <th>BUDGET</th>
+  </tr>
+
+  {% for row in events %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
   {% endfor %}
-</tr>
-{% endfor %}
 </table>
 
-break
-
+<!-- Table of all users + info -->
+<h2>Users</h2>
 <table>
   <tr>
     <th>USER_ID</th>
@@ -65,6 +77,70 @@ break
   </tr>
   {% endfor %}
 </table>
+
+
+
+<!-- Table of all expenses + info -->
+<h2>Expenses</h2>
+<table>
+  <tr>
+		<th>ITEM_ID</th>
+		<th>EVENT_ID</th>
+		<th>ITEM_NAME</th>
+		<th>COST</th>
+  </tr>
+
+  {% for row in expenses %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+
+<h2>Financiers</h2>
+<table>
+  <tr>
+		<th>FIN_ID</th>
+		<th>EVENT_ID</th>
+		<th>FINANCIER_EMAIL</th>
+		<th>COMPANY</th>
+		<th>AMOUNT_SPONSORED</th>
+  </tr>
+
+  {% for row in financiers %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+
+<h2>Affiliates</h2>
+<table>
+  <tr>
+		<th>AFF_ID</th>
+		<th>EVENT_ID</th>
+		<th>NAME</th>
+		<th>EMAIL</th>
+		<th>PHONE</th>
+		<th>POSITION</th>
+		<th>STATUS</th>
+  </tr>
+
+  {% for row in affiliates %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
 
 {% endblock %}
  
