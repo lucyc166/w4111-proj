@@ -91,12 +91,18 @@ def teardown_request(exception):
 # see for routing: https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
+
+# global variables to track logged in user
 user_id = ""
 email = ""
 
 @app.route('/')
 def index():
 	return render_template("index.html")
+
+@app.route('/login')
+def login():
+	return render_template("login.html")
 
 @app.route('/hub')
 def hub():
@@ -111,10 +117,6 @@ def hub():
 		orgs.append(result)
 	print(orgs)
 	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email)
-
-@app.route('/login')
-def login():
-	return render_template("login.html")
 
 # url routing for custom org page
 @app.route('/org/<org_id>')
@@ -145,9 +147,9 @@ def profile(org_id):
 def login_submit():
 	if request.method == "POST":
 		global email
-		# getting input with name = fname in HTML form
+
+		# grab email and password from log in form
 		email = request.form.get("email")
-		# getting input with name = lname in HTML form
 		password = request.form.get("password")
 		
 		# check if email and password are in the database
@@ -163,7 +165,7 @@ def login_submit():
 			global user_id
 			user_id = cursor.fetchone()[0]
 			print(user_id)
-			return redirect("hub", code = 303)
+			return redirect('/hub')
 			#return render_template("hub.html", email = email, user_id = user_id)
 			## ** FIGURE HOW TO REROUTE THIS TO APP.ROUTE (HUB) so the org queries show up
 
@@ -188,6 +190,37 @@ def admin():
 
 	cursor.close()
 	return render_template("admin.html", orgs = orgs, users = users)
+
+# add org form
+@app.route('/add_org', methods=["GET", "POST"])
+def add_org():
+	# accessing form inputs from user
+    org_name = request.form.get("org_name")
+    org_desc = request.form.get("org_desc")
+    org_email = request.form.get("org_email")
+    marketing_email = request.form.get("marketing_email")
+    comms_email = request.form.get("comms_email")
+    finance_email = request.form.get("finance_email")
+    advisor_email = request.form.get("advisor_email")
+	
+	# new org_id is highest org_id + 1
+    select_query = "SELECT max(org_id) FROM organizations"
+    cursor = g.conn.execute(text(select_query))
+    org_id = str(int(cursor.fetchone()[0]) + 1)
+
+	# query to add org to organizations table
+    select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
+    print(select_query)
+    g.conn.execute(text(select_query))
+    g.conn.commit()
+
+	# query to add affiliated_with linking logged in user w/ org
+    select_query = "INSERT INTO affiliated_with (user_id, org_id) VALUES (%s, %s)" % (user_id, org_id)
+    print(select_query)
+    g.conn.execute(text(select_query))
+    g.conn.commit()
+
+    return redirect('/hub')
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])

@@ -35,7 +35,21 @@
 </table>
 
 <!-- Table of all users + info -->
+
+
 <h2>Users</h2>
+<table>
+{% for row in users %}
+<tr>
+  {% for col in row %}
+  <td>{{ col }}</td>
+  {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+break
+
 <table>
   <tr>
     <th>USER_ID</th>
