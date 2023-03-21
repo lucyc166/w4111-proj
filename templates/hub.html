@@ -53,7 +53,7 @@ The main content area of the homepage will have Future Events and Past Events, a
 <!-- ** add labels to these form inputs? & figure out how to link w database -->
 <h2>Add an Organization</h2>
 <form action="{{ url_for('add_org') }}" method = "POST"><!-- ** figure out what to put for action -->
-<p> Organization Name: <input type = "text" name = "org_name"/></p>
+<p> Organization Name: <input type = "text" name = "org_name" required/></p>
 <p> Organization Description: <textarea rows = "4" cols = "50" name = "org_desc"></textarea></p>
 <p> Organization Email: <input type = "text" name = "org_email"/></p>
 <p> Marketing Email: <input type = "text" name = "marketing_email"/></p>
