@@ -116,11 +116,11 @@ def hub():
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email)
+	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email, events = events)
 
 # url routing for custom org page
 @app.route('/org/<org_id>')
-def profile(org_id):
+def org_profile(org_id):
 
 	# grab org info from sql query
 	select_query = "SELECT * FROM organizations WHERE org_id = '%s'" % (org_id)
@@ -143,9 +143,9 @@ def profile(org_id):
 
 # url routing for custom events page
 @app.route('/event/<event_id>')
-def profile(event_id):
+def event_profile(event_id):
 
-	# grab org info from sql query
+	# grab event info from sql query
 	select_query = "SELECT * FROM events WHERE event_id = '%s'" % (event_id)
 	cursor = g.conn.execute(text(select_query))
 	print(select_query)
