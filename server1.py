@@ -209,13 +209,13 @@ def add_org():
     org_id = str(int(cursor.fetchone()[0]) + 1)
 
 	# query to add org to organizations table
-    select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
+    select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
     print(select_query)
     g.conn.execute(text(select_query))
     g.conn.commit()
 
 	# query to add affiliated_with linking logged in user w/ org
-    select_query = "INSERT INTO affiliated_with (user_id, org_id) VALUES (%s, %s)" % (user_id, org_id)
+    select_query = "INSERT INTO affiliated_with (user_id, org_id) VALUES ('%s', '%s')" % (user_id, org_id)
     print(select_query)
     g.conn.execute(text(select_query))
     g.conn.commit()
