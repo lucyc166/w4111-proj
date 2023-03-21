@@ -8,7 +8,7 @@
 <!-- Form to add org -->
 
 {% for org in orgs %}
-<h2>{{ org.org_name }}</h2>
+<h1>{{ org.org_name }}</h1>
 
 <table>
     <tr>
@@ -43,6 +43,50 @@
 
 {% endfor %}
 
+<h1>Events</h1>
+
+{% for event in events %}
+<h2>{{ event.title }}</h2>
+
+<table>
+    <tr>
+      <th>EVENT ID</th>
+      <th>{{ event.event_id }}</th>
+    </tr>
+    <tr>
+        <th>EVENT DESCRIPTION</th>
+        <th>{{ event.description }}</th>
+    </tr>
+    <tr>
+        <th>LOCATION</th>
+        <th>{{ event.location }}</th>
+    </tr>
+    <tr>
+        <th>TIME</th>
+        <th>Start: {{ event.datetime_start }}</th>
+        <th>End: {{ event.datetime_end }}</th>
+    </tr>
+    <tr>
+        <th>BUDGET</th>
+        <th>{{ event.budget }}</th>
+    </tr>
+    <tr>
+        <th>LIASON NAME</th>
+        <th> {{ event.liason_name }}</th>
+    </tr>
+    <tr>
+        <th>LIASON EMAIL</th>
+        <th> {{ event.liason_email }}</th>
+    </tr>
+    <tr>
+        <th>APPROVED STATUS</th>
+        <th>{{ event.approved }}</th>
+    </tr>
+    
+</table>
+{% endfor %}
+
+<h2>Add an Event</h2>
 
 <h2>Users</h2>
 

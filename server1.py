@@ -147,7 +147,15 @@ def org_profile(org_id):
 	for result in cursor:
 		users.append(result)
 	print(result)	
-	return render_template("org_profile.html", orgs = orgs, users = users)
+
+	# grab events affiliated with org
+	select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s'" % (user_id)
+	cursor = g.conn.execute(text(select_query))
+	events = []
+	for result in cursor:
+		events.append(result)
+
+	return render_template("org_profile.html", orgs = orgs, users = users, events = events)
 
 # url routing for custom events page
 @app.route('/event/<event_id>')
