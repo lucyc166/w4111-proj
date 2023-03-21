@@ -116,7 +116,15 @@ def hub():
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email)
+	
+	# grab events affiliated with orgs that are affiliated with the user
+	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id JOIN hosts h ON o.org_id = h.org_id JOIN events e ON e.event_id = h.event_id WHERE user_id = '%s'" % (user_id)
+	cursor = g.conn.execute(text(select_query))
+	events = []
+	for result in cursor:
+		events.append(result)
+	
+	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email, events = events)
 
 # url routing for custom org page
 @app.route('/org/<org_id>')
