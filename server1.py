@@ -287,6 +287,31 @@ def add_org():
 
 	return redirect('/hub')
 
+@app.rout('/add_event', methods=["GET", "POST"])
+def add_event():
+	title = request.form.get("title")
+	description = request.form.get("description")
+	location = request.form.get("location")
+	datetime_start = request.form.get("datetime_start")
+	datetime_end = request.form.get("datetime_end")
+	budget = request.form.get("budget")
+	liason_name = request.form.get("liason_name")
+	liason_email = request.form.get("liason_email")
+	approved = request.form.get("approved")
+
+	# new event_id is highest event_id + 1
+	select_query = "SELECT max(event_id) FROM events"
+	cursor = g.conn.execute(text(select_query))
+	org_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
+
+	# query to add org to organizations table
+	select_query = "INSERT INTO events (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget)
+	print(select_query)
+	g.conn.execute(text(select_query))
+	g.conn.commit()
+
+
+
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # add expenses form
 @app.route('/<event_id>/add_expense', methods=["GET", "POST"])
