@@ -118,7 +118,7 @@ def hub():
 	print(orgs)
 	
 	# grab events affiliated with orgs that are affiliated with the user
-	select_query = "SELECT * FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id JOIN hosts h ON o.org_id = h.org_id JOIN events e ON e.event_id = h.event_id WHERE user_id = '%s'" % (user_id)
+	select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s'" % (user_id)
 	cursor = g.conn.execute(text(select_query))
 	events = []
 	for result in cursor:
