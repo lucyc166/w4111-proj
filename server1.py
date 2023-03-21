@@ -287,7 +287,7 @@ def add_org():
 
 	return redirect('/hub')
 
-@app.rout('/add_event', methods=["GET", "POST"])
+@app.route('/add_event', methods=["GET", "POST"])
 def add_event():
 	title = request.form.get("title")
 	description = request.form.get("description")
