@@ -116,7 +116,7 @@ def hub():
 	for result in cursor:
 		orgs.append(result)
 	print(orgs)
-	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email, events = events)
+	return render_template("hub.html", orgs = orgs, user_id = user_id, email = email)
 
 # url routing for custom org page
 @app.route('/org/<org_id>')
