@@ -347,7 +347,7 @@ def add_expense(event_id):
 	g.conn.execute(text(select_query))
 	g.conn.commit()
 
-	return redirect("/event/'%s'" % (event_id))
+	return redirect("/event/%s" % (event_id))
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # update expenses form
