@@ -47,6 +47,24 @@
     
 </table>
 
+<h2>{{ event.title }} Expenses</h2>
+<table>
+  <tr>
+		<th>ITEM_ID</th>
+		<th>EVENT_ID</th>
+		<th>ITEM_NAME</th>
+		<th>COST</th>
+  </tr>
+
+  {% for row in expenses %}
+  <tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
 <!--insert event information here in a table format-->
 <h2>Add an Expense</h2>
 <form action="/{{event[0]}}/add_expense" method = "POST"> <!--*** insert event id into this statement somehow-->

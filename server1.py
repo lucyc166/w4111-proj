@@ -170,7 +170,16 @@ def event_profile(event_id):
 		events.append(result)
 	print(events)
 
-	return render_template("event_profile.html", events = events)
+	# grab expenses info from sql query
+	select_query = "SELECT * FROM expenses WHERE event_id = '%s'" % (event_id)
+	cursor = g.conn.execute(text(select_query))
+	print(select_query)
+	expenses = []
+	for result in cursor:
+		expenses.append(result)
+	print(expenses)
+ 
+	return render_template("event_profile.html", events = events, expenses = expenses)
 
 
 @app.route('/login_submit', methods =["GET", "POST"])
