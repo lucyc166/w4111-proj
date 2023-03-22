@@ -287,8 +287,8 @@ def add_org():
 
 	return redirect('/hub')
 
-@app.route('/add_event', methods=["GET", "POST"])
-def add_event():
+@app.route('/org/<org_id>', methods=["GET", "POST"])
+def add_event(org_id):
 	title = request.form.get("title")
 	description = request.form.get("description")
 	location = request.form.get("location")
@@ -302,14 +302,20 @@ def add_event():
 	# new event_id is highest event_id + 1
 	select_query = "SELECT max(event_id) FROM events"
 	cursor = g.conn.execute(text(select_query))
-	org_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
+	event_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
 
-	# query to add org to organizations table
+	# query to add event to events table
 	select_query = "INSERT INTO events (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget)
 	print(select_query)
 	g.conn.execute(text(select_query))
 	g.conn.commit()
 
+	# query to add (event,org) pair to hosts table
+	select_query = "INSERT INTO hosts (org_id, event_id) VALUES ('%s', '%s')" % (org_id, event_id)
+	g.conn.execute(text(select_query))
+	g.conn.commit()
+
+	return redirect('/hub')
 
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
