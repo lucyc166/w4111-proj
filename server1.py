@@ -296,7 +296,7 @@ def add_org():
 
 	return redirect('/hub')
 
-@app.route('/org/<org_id>/add_event', methods=["GET", "POST"])
+@app.route('/org/<org_id>/add_event', methods=["POST"])
 def add_event(org_id):
 	title = request.form.get("title")
 	description = request.form.get("description")
@@ -324,7 +324,7 @@ def add_event(org_id):
 	g.conn.execute(text(select_query))
 	g.conn.commit()
 
-	return redirect('/hub')
+	return redirect("/org/'%s'") % (org_id)
 
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
