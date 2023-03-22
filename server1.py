@@ -330,8 +330,8 @@ def add_event(org_id):
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # add expenses form
 @app.route('/<event_id>/add_expense', methods=["GET", "POST"])
-def add_expense():
-	event_id = request.script_root[1:] # grab event_id from url
+def add_expense(event_id):
+    	#event_id = request.script_root[1:] # grab event_id from url
 	# accessing form inputs from user
 	item_name = request.form.get("item_name")
 	cost = request.form.get("cost")
@@ -339,21 +339,20 @@ def add_expense():
 	# new expense_id is highest expense_id + 1
 	select_query = "SELECT max(item_id) FROM expenses"
 	cursor = g.conn.execute(text(select_query))
-	item_id = str((cursor.fetchone()[0]) + 1)
-
+        item_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
 	# query to add org to expenses table
 	select_query = "INSERT INTO expenses (item_id, event_id, item_name, cost) VALUES ('%s', '%s', '%s', '%s')" % (item_id, event_id, item_name, cost)
 	print(select_query)
 	g.conn.execute(text(select_query))
 	g.conn.commit()
 
-	return redirect('/<event_id>')
+	return redirect(("/event/'%s'") % (event_id))
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # update expenses form
 @app.route('/<event_id>/update_expense', methods=["GET", "POST"])
-def update_expense():
-	event_id = request.script_root[1:] # grab event_id from url
+def update_expense(event_id):
+	#event_id = request.script_root[1:] # grab event_id from url
 	item_id = request.form.get("item_id")
 
 	if request.form.get("delete_request") != None: # delete box is checked
