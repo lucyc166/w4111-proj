@@ -70,7 +70,7 @@
 <form action="/{{event[0]}}/add_expense" method = "POST"> <!--*** insert event id into this statement somehow-->
 <p> Item Name: <input type = "text" name = "item_name" required/></p>
 <p> Item Cost: <input type = "text" name = "cost" required/></p>
-<p><button type="submit">Submit</button></p>
+<p><button type="submit">Submit</button></p></form>
 
 <h2>Update an Expense</h2>
 <form action="/{{event[0]}}/update_expense" method = "POST"> <!--*** insert event id into this statement somehow-->
@@ -78,7 +78,7 @@
 <p> If you wish to delete this event, check the following box and leave the rest empty. <input type = "checkbox" name = "delete_request"/></p>
 <p> Item Name: <input type = "text" name = "item_name" required/></p>
 <p> Item Cost: <input type = "text" name = "cost" required/></p>
-<p><button type="submit">Submit</button></p>
+<p><button type="submit">Submit</button></p></form>
 
 {% endfor %}
 {% endblock %}
