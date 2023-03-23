@@ -4,3 +4,12 @@ table, th, td, form {
   text-align: left
 
 }
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  padding: 10px
+}

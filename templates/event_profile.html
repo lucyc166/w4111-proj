@@ -10,7 +10,12 @@
 {% for event in events %}
 <h2>{{ event.title }}</h2>
 
-<p>Total Budget: ${{ event.budget }}     | Total Cost: ${{ total_expense }}     | Funds Remaining: ${{ event.budget - total_expense }}</p>
+<p>Total Budget: ${{ event.budget }}     | Total Cost: ${{ total_expense or 0 }}     |      Funds Remaining: ${% if total_expense%}
+    {{event.budget - total_expense}}
+{% else %}
+    {{ event.budget }}
+{% endif %}
+</p>
 
 <table>
     <tr>
@@ -49,38 +54,104 @@
     
 </table>
 
-<h2>{{ event.title }} Expenses</h2>
-<table>
-  <tr>
-		<th>ITEM_ID</th>
-		<th>EVENT_ID</th>
-		<th>ITEM_NAME</th>
-		<th>COST</th>
-  </tr>
 
-  {% for row in expenses %}
-  <tr>
-    {% for col in row %}
-    <td>{{ col }}</td>
+
+<!--insert expense info in a 2-column layouy -->
+
+<div class="row">
+    <div class="column">
+        <h2>{{ event.title }} Expenses</h2>
+        <table>
+          <tr>
+                <th>ITEM_ID</th>
+                <th>EVENT_ID</th>
+                <th>ITEM_NAME</th>
+                <th>COST</th>
+          </tr>
+        
+          {% for row in expenses %}
+          <tr>
+            {% for col in row %}
+            <td>{{ col }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+    </div>
+    <div class="column">
+        <h2>Add an Expense</h2>
+        <form action="{{ url_for('add_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <p> Item Name: <input type = "text" name = "item_name" required/></p>
+        <p> Item Cost: <input type = "text" name = "cost" required/></p>
+        <p><button type="submit">Submit</button></p></form>
+    </div>
+    <div class="column">
+        <h2>Update an Expense</h2>
+        <form action="{{ url_for('update_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <p> Item ID: <input type = "text" name = "item_id" required/></p>
+        <p> If you wish to delete this event, check the following box and fill the rest with N/A. <input type = "checkbox" name = "delete_request"/></p>
+        <p> Item Name: <input type = "text" name = "item_name" required/></p>
+        <p> Item Cost: <input type = "text" name = "cost" required/></p>
+        <p><button type="submit">Submit</button></p></form>
+    </div>
+  </div>
+
+  <p></p>
+
+
+
+  <h2>Financiers</h2> 
+  <a class="button" href="mailto:{% for financier in financiers %}
+  {{ financier.financier_email }},
+   {% endfor %}">Email Financiers:</a> {% for financier in financiers %}
+   {{ financier.financier_email }},
     {% endfor %}
-  </tr>
-  {% endfor %}
-</table>
 
-<!--insert event information here in a table format-->
-<h2>Add an Expense</h2>
-<form action="{{ url_for('add_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
-<p> Item Name: <input type = "text" name = "item_name" required/></p>
-<p> Item Cost: <input type = "text" name = "cost" required/></p>
-<p><button type="submit">Submit</button></p></form>
+  <table>
+    <tr>
+          <th>FIN_ID</th>
+          <th>EVENT_ID</th>
+          <th>FINANCIER_EMAIL</th>
+          <th>COMPANY</th>
+          <th>AMOUNT_SPONSORED</th>
+    </tr>
+  
+    {% for row in financiers %}
+    <tr>
+      {% for col in row %}
+      <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
 
-<h2>Update an Expense</h2>
-<form action="{{ url_for('update_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
-<p> Item ID: <input type = "text" name = "item_id" required/></p>
-<p> If you wish to delete this event, check the following box and fill the rest with N/A. <input type = "checkbox" name = "delete_request"/></p>
-<p> Item Name: <input type = "text" name = "item_name" required/></p>
-<p> Item Cost: <input type = "text" name = "cost" required/></p>
-<p><button type="submit">Submit</button></p></form>
+  
+  <h2>Affiliates</h2>
+  <a class="button" href="mailto:{% for aff in affiliates %}
+  {{ aff.email }},
+   {% endfor %}">Email Affiliates:</a> {% for aff in affiliates %}
+   {{ aff.email }},
+    {% endfor %}
+  <table>
+    <tr>
+          <th>AFF_ID</th>
+          <th>EVENT_ID</th>
+          <th>NAME</th>
+          <th>EMAIL</th>
+          <th>PHONE</th>
+          <th>POSITION</th>
+          <th>STATUS</th>
+    </tr>
+  
+    {% for row in affiliates %}
+    <tr>
+      {% for col in row %}
+      <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+
 
 {% endfor %}
 {% endblock %}

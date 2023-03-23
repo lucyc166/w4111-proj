@@ -12,6 +12,18 @@
 <h3>Nav Bar: </h3>
 <p><a href="/">Return to welcome page</a></p>
 
+<h2>Quick Links</h2>
+<h3>Organizations</h3>
+{% for org in orgs %}
+<p><a href="/org/{{org[0]}}">{{ org[1] }}</a></p>
+{% endfor %}
+
+<h3>Events</h3>
+{% for event in events %}
+<p><a href="/event/{{event[0]}}">{{ event[1] }}</a></p>
+{% endfor %}
+
+
 <h2>Organizations</h2>
 <table>
   <tr>
@@ -60,6 +72,8 @@
   {% endfor %}
 </table>
 
+
+
 <!-- Table of all users + info -->
 <h2>Users</h2>
 <table>
@@ -70,6 +84,7 @@
   </tr>
 
   {% for row in users %}
+
   <tr>
     {% for col in row %}
     <td>{{ col }}</td>

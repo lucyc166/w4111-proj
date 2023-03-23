@@ -7,10 +7,11 @@
 {% block body %}
 <!-- Form to add org -->
 
-{% for org in orgs %}
 <h1>{{ org.org_name }}</h1>
+<a class="button" href="mailto: {{org.org_email}}, {{ org.marketing_email }}, {{ org.comms_email }}, {{ org.finance_email }},{{ org.advisor_email }}">
+Email Organization:</a> {{org.org_email}}, {{ org.marketing_email }}, {{ org.comms_email }}, {{ org.finance_email }}, {{ org.advisor_email }}
 
-<table align = "left">
+<table>
     <tr>
       <th>ORG_ID</th>
       <th> {{ org.org_id }}</th>
@@ -41,14 +42,13 @@
     </tr>
   </table>
 
-{% endfor %}
 
 <h1>Events</h1>
 
 {% for event in events %}
-<h2>{{ event.title }}</h2>
+<h2><a href="/event/{{event[0]}}">{{ event[1] }}</a></h2>
 
-<table align = "">
+<table>
     <tr>
       <th>EVENT ID</th>
       <th>{{ event.event_id }}</th>
@@ -63,8 +63,8 @@
     </tr>
     <tr>
         <th>TIME</th>
-        <th>Start: {{ event.datetime_start }}</th>
-        <th>End: {{ event.datetime_end }}</th>
+        <th><p>Start: {{ event.datetime_start.strftime("%a, %b, %12, %Y – %-I:%M:%S %p") }}</p>
+        <p>End: {{ event.datetime_end.strftime("%a, %b, %12, %Y – %-I:%M:%S %p") }}</p></th>
     </tr>
     <tr>
         <th>BUDGET</th>
@@ -82,12 +82,12 @@
         <th>APPROVED STATUS</th>
         <th>{{ event.approved }}</th>
     </tr>
-    
 </table>
 {% endfor %}
 
+
 <h2>Add an Event</h2>
-<form action="{{ url_for('add_event') }}" method = "POST"><!-- ** figure out what to put for action -->
+<form action="{{ url_for('add_event', org_id = org.org_id) }}" method = "POST"><!-- ** figure out what to put for action -->
 <p> Event Title: <input type = "text" name = "title" required/></p>
 <p> Event Description: <textarea rows = "4" cols = "50" name = "description"></textarea></p>
 <p> Location: <input type = "text" name = "location"/></p>
@@ -97,7 +97,7 @@
 <p> Liason Name: <input type = "text" name = "liason_name"/></p>
 <p> Liason Email: <input type = "text" name = "liason_email"/></p>
 <p> Approval Status: <input type = "text" name = "approved"/></p>
-<p><button type="submit">Submit</button></p>
+<p><button type="submit">Submit</button></p></form>
 
 <h2>Users</h2>
 

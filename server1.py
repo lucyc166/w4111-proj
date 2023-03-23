@@ -133,11 +133,7 @@ def org_profile(org_id):
     # grab org info from sql query
     select_query = "SELECT * FROM organizations WHERE org_id = '%s'" % (org_id)
     cursor = g.conn.execute(text(select_query))
-    print(select_query)
-    orgs = []
-    for result in cursor:
-        orgs.append(result)
-    print(orgs)
+    org = cursor.fetchone()
 
     # grab users affiliated with org from query
     select_query = "SELECT u.user_id, u.user_email, u.password  FROM organizations o JOIN affiliated_with aw ON aw.org_id = o.org_id JOIN users u on aw.user_id = u.user_id WHERE o.org_id = '%s'" % (org_id)
@@ -155,7 +151,7 @@ def org_profile(org_id):
     for result in cursor:
         events.append(result)
 
-    return render_template("org_profile.html", orgs = orgs, users = users, events = events)
+    return render_template("org_profile.html", org = org, users = users, events = events)
 
 # url routing for custom events page
 @app.route('/event/<event_id>')
@@ -183,7 +179,24 @@ def event_profile(event_id):
     select_query = "SELECT sum(cost) FROM expenses WHERE event_id = '%s'" % (event_id)
     cursor = g.conn.execute(text(select_query))
     total_expense = cursor.fetchone()[0]
-    return render_template("event_profile.html", events = events, expenses = expenses, total_expense = total_expense)
+    
+    # grab affiliates info from sql query
+    select_query = "SELECT * FROM affiliates WHERE event_id = '%s'" % (event_id)
+    cursor = g.conn.execute(text(select_query))
+    print(select_query)
+    affiliates = []
+    for result in cursor:
+        affiliates.append(result)
+        
+    # grab financiers info from sql query
+    select_query = "SELECT * FROM financiers WHERE event_id = '%s'" % (event_id)
+    cursor = g.conn.execute(text(select_query))
+    print(select_query)
+    financiers = []
+    for result in cursor:
+        financiers.append(result)
+    
+    return render_template("event_profile.html", events = events, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers)
 
 
 @app.route('/login_submit', methods =["GET", "POST"])
