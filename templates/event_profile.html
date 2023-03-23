@@ -10,7 +10,7 @@
 {% for event in events %}
 <h2>{{ event.title }}</h2>
 
-<p>Total Budget: {{ event.budget }}     | Total Cost: {{ total_expense }}     | Funds Remaining: {{ event.budget - total_expense }}</p>
+<p>Total Budget: ${{ event.budget }}     | Total Cost: ${{ total_expense }}     | Funds Remaining: ${{ event.budget - total_expense }}</p>
 
 <table>
     <tr>
@@ -27,8 +27,8 @@
     </tr>
     <tr>
         <th>TIME</th>
-        <th>Start: {{ event.datetime_start }}</th>
-        <th>End: {{ event.datetime_end }}</th>
+        <th><p>Start: {{ event.datetime_start.strftime("%a, %b, %12, %Y – %-I:%M:%S %p") }}</p>
+            <p>End: {{ event.datetime_end.strftime("%a, %b, %12, %Y – %-I:%M:%S %p") }}</p></th>
     </tr>
     <tr>
         <th>BUDGET</th>

@@ -1,0 +1,6 @@
+table, th, td, form {
+  border: 1px solid;
+  padding: 5px;
+  text-align: left
+
+}
