@@ -144,14 +144,21 @@ def org_profile(org_id):
         users.append(result)
     print(result)	
 
-    # grab events affiliated with org
-    select_query = "SELECT E.event_id, E.title, E.approved, E.liason_name, E.liason_email, E.description, E.location, E.datetime_start, E.datetime_end, E.budget FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s'" % (org_id)
+    # grab PAST events affiliated with org
+    select_query = "SELECT E.event_id, E.title, E.approved, E.liason_name, E.liason_email, E.description, E.location, E.datetime_start, E.datetime_end, E.budget FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s' and E.datetime_start <= now() ORDER BY E.datetime_start" % (org_id)
     cursor = g.conn.execute(text(select_query))
-    events = []
+    past_events = []
     for result in cursor:
-        events.append(result)
+        past_events.append(result)
+    
+    # FUTURE events
+    select_query = "SELECT E.event_id, E.title, E.approved, E.liason_name, E.liason_email, E.description, E.location, E.datetime_start, E.datetime_end, E.budget FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s' and E.datetime_start > now() ORDER BY E.datetime_start" % (org_id)
+    cursor = g.conn.execute(text(select_query))
+    future_events = []
+    for result in cursor:
+        future_events.append(result)
 
-    return render_template("org_profile.html", org = org, users = users, events = events)
+    return render_template("org_profile.html", org = org, users = users, past_events = past_events, future_events = future_events)
 
 # url routing for custom events page
 @app.route('/event/<event_id>')

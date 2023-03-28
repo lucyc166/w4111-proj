@@ -43,9 +43,9 @@ Email Organization:</a> {{org.org_email}}, {{ org.marketing_email }}, {{ org.com
   </table>
 
 
-<h1>Events</h1>
+<h1>Future Events</h1>
 
-{% for event in events %}
+{% for event in future_events %}
 <h2><a href="/event/{{event[0]}}">{{ event[1] }}</a></h2>
 
 <table>
@@ -84,6 +84,50 @@ Email Organization:</a> {{org.org_email}}, {{ org.marketing_email }}, {{ org.com
     </tr>
 </table>
 {% endfor %}
+
+
+<h1>Past Events</h1>
+
+{% for event in past_events %}
+<h2><a href="/event/{{event[0]}}">{{ event[1] }}</a></h2>
+
+<table>
+    <tr>
+      <th>EVENT ID</th>
+      <th>{{ event.event_id }}</th>
+    </tr>
+    <tr>
+        <th>EVENT DESCRIPTION</th>
+        <th>{{ event.description }}</th>
+    </tr>
+    <tr>
+        <th>LOCATION</th>
+        <th>{{ event.location }}</th>
+    </tr>
+    <tr>
+        <th>TIME</th>
+        <th><p>Start: {{ event.datetime_start.strftime("%a, %b, %12, %Y – %-I:%M:%S %p") }}</p>
+        <p>End: {{ event.datetime_end.strftime("%a, %b, %12, %Y – %-I:%M:%S %p") }}</p></th>
+    </tr>
+    <tr>
+        <th>BUDGET</th>
+        <th>{{ event.budget }}</th>
+    </tr>
+    <tr>
+        <th>LIASON NAME</th>
+        <th> {{ event.liason_name }}</th>
+    </tr>
+    <tr>
+        <th>LIASON EMAIL</th>
+        <th> {{ event.liason_email }}</th>
+    </tr>
+    <tr>
+        <th>APPROVED STATUS</th>
+        <th>{{ event.approved }}</th>
+    </tr>
+</table>
+{% endfor %}
+
 
 
 <h2>Add an Event</h2>
