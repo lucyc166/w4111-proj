@@ -117,14 +117,20 @@ def hub():
         orgs.append(result)
     print(orgs)
     
-    # grab events affiliated with orgs that are affiliated with the user
-    select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s'" % (user_id)
+    # grab PAST events affiliated with orgs that are affiliated with the user
+    select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s' and E.datetime_start <= now() order by E.datetime_start" % (user_id)
     cursor = g.conn.execute(text(select_query))
-    events = []
+    past_events = []
     for result in cursor:
-        events.append(result)
+        past_events.append(result)
+    # FUTURE events
+    select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s' and E.datetime_start > now() order by E.datetime_start" % (user_id)
+    cursor = g.conn.execute(text(select_query))
+    future_events = []
+    for result in cursor:
+        future_events.append(result)
     
-    return render_template("hub.html", orgs = orgs, user_id = user_id, email = email, events = events)
+    return render_template("hub.html", orgs = orgs, user_id = user_id, email = email, past_events = past_events, future_events = future_events)
 
 # url routing for custom org page
 @app.route('/org/<org_id>')
