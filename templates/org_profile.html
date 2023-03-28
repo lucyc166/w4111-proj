@@ -88,11 +88,11 @@ Email Organization:</a> {{org.org_email}}, {{ org.marketing_email }}, {{ org.com
 
 <h2>Add an Event</h2>
 <form action="{{ url_for('add_event', org_id = org.org_id) }}" method = "POST"><!-- ** figure out what to put for action -->
-<p> Event Title: <input type = "text" name = "title" required/></p>
+<p> Event Title: <span>*</span> <input type = "text" name = "title" required/></p>
 <p> Event Description: <textarea rows = "4" cols = "50" name = "description"></textarea></p>
 <p> Location: <input type = "text" name = "location"/></p>
-<p> Start Time: <input type = "text" name = "datetime_start"/></p>
-<p> End Time: <input type = "text" name = "datetime_end"/></p>
+<p> Start Time: <input type = "datetime-local" name = "datetime_start"/></p>
+<p> End Time: <input type = "datetime-local" name = "datetime_end"/></p>
 <p> Budget: <input type = "text" name = "budget"/></p>
 <p> Liason Name: <input type = "text" name = "liason_name"/></p>
 <p> Liason Email: <input type = "text" name = "liason_email"/></p>

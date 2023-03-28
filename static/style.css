@@ -13,3 +13,7 @@ table, th, td, form {
   flex: 50%;
   padding: 10px
 }
+
+span {
+  color: red;
+}
