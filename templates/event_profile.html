@@ -120,7 +120,7 @@
       <h2>Update Financier Info</h2>
         <form action="{{ url_for('update_financier', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Financier ID: <input type = "text" name = "fin_id" required/></p>
-        <p> If you wish to delete this event, check the following box and fill the rest with N/A. <input type = "checkbox" name = "delete_request"/></p>
+        <p> If you wish to delete this event, check the following box. <input type = "checkbox" name = "delete_request_f"/></p>
         <p> Financier Email: <input type = "text" name = "financier_email" /></p>
         <p> Financier Company: <input type = "text" name = "company" /></p>
         <p> Amount Sponsored: <input type = "text" name = "amount_sponsored" /></p>
