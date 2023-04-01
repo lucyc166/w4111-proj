@@ -140,7 +140,11 @@ Email Organization:</a> {{org.org_email}}, {{ org.marketing_email }}, {{ org.com
 <p> Budget: <input type = "text" name = "budget"/></p>
 <p> Liason Name: <input type = "text" name = "liason_name"/></p>
 <p> Liason Email: <input type = "text" name = "liason_email"/></p>
-<p> Approval Status: <input type = "text" name = "approved"/></p>
+<label for="approved"> Approval Status: </label>
+        <select name="approved" id="approved">
+          <option value="True">True</option>
+          <option value="False">False</option>
+        </select>
 <p><button type="submit">Submit</button></p></form>
 
 <h2>Users</h2>
