@@ -89,9 +89,9 @@
         <h2>Update an Expense</h2>
         <form action="{{ url_for('update_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Item ID: <input type = "text" name = "item_id" required/></p>
-        <p> If you wish to delete this event, check the following box and fill the rest with N/A. <input type = "checkbox" name = "delete_request"/></p>
-        <p> Item Name: <input type = "text" name = "item_name" required/></p>
-        <p> Item Cost: <input type = "text" name = "cost" required/></p>
+        <p> If you wish to delete this event, check the following box. <input type = "checkbox" name = "delete_request"/></p>
+        <p> Item Name: <input type = "text" name = "item_name" /></p>
+        <p> Item Cost: <input type = "text" name = "cost" /></p>
         <p><button type="submit">Submit</button></p></form>
     </div>
   </div>
