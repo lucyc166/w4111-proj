@@ -448,6 +448,53 @@ def update_financier(event_id):
 
     return redirect("/event/%s" % (event_id))
 
+
+@app.route('/<event_id>/add_affiliate', methods=["GET", "POST"])
+def add_affiliate(event_id):
+    name = request.form.get("name")
+    email = request.form.get("email")
+    phone = request.form.get("phone")
+    position = request.form.get("position")
+    status = request.form.get("status")
+
+    # generate aff_id
+    select_query = "SELECT max(aff_id) FROM affiliates"
+    cursor = g.conn.execute(text(select_query))
+    fin_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
+
+    # add affiliate to affiliates table
+    select_query = "INSERT INTO affiliates (aff_id, event_id, name, email, phone, position, status) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (aff_id, event_id, name, email, phone, position, status)
+    print(select_query)
+    g.conn.execute(text(select_query))
+    g.conn.commit()
+
+    return redirect("/event/%s" % (event_id))
+
+
+@app.route('/<event_id>/update_affiliate', methods=["GET", "POST"])
+def update_affiliate(event_id):
+    aff_id = request.form.get("aff_id")
+
+    # delete affiliate
+    if request.form.get("delete_request_a") != None:
+        select_query = "DELETE from affiliates WHERE aff_id = '%s' and event_id = '%s'" % (aff_id, event_id)
+        print(select_query)
+        g.conn.execute(text(select_query))
+        g.conn.commit()
+    else:
+        name = request.form.get("name")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        position = request.form.get("position")
+        status = request.form.get("status")
+        select_query = "UPDATE affiliate SET name = '%s', email = '%s', phone = '%s', position = '%s', status = '%s' WHERE aff_id = '%s' and event_id = '%s'" % (name, email, phone, position, status, aff_id, event_id)
+        print(select_query)
+        g.conn.execute(text(select_query))
+        g.conn.commit()
+
+    return redirect("/event/%s" % (event_id))
+
+
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
 def add():
