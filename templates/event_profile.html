@@ -107,6 +107,23 @@
    {% endfor %}">Email Financiers:</a> {% for financier in financiers %}
    {{ financier.financier_email }},
     {% endfor %}
+    <table>
+      <tr>
+            <th>FIN_ID</th>
+            <th>EVENT_ID</th>
+            <th>FINANCIER_EMAIL</th>
+            <th>COMPANY</th>
+            <th>AMOUNT_SPONSORED</th>
+      </tr>
+    
+      {% for row in financiers %}
+      <tr>
+        {% for col in row %}
+        <td>{{ col }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
     </div>
     <div class="column">
       <h2>Add a Financier</h2>
@@ -128,50 +145,81 @@
     </div>
   </div>
 
-  <table>
-    <tr>
-          <th>FIN_ID</th>
-          <th>EVENT_ID</th>
-          <th>FINANCIER_EMAIL</th>
-          <th>COMPANY</th>
-          <th>AMOUNT_SPONSORED</th>
-    </tr>
-  
-    {% for row in financiers %}
-    <tr>
-      {% for col in row %}
-      <td>{{ col }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
+
+
 
   
-  <h2>Affiliates</h2>
-  <a class="button" href="mailto:{% for aff in affiliates %}
-  {{ aff.email }},
-   {% endfor %}">Email Affiliates:</a> {% for aff in affiliates %}
-   {{ aff.email }},
-    {% endfor %}
-  <table>
-    <tr>
-          <th>AFF_ID</th>
-          <th>EVENT_ID</th>
-          <th>NAME</th>
-          <th>EMAIL</th>
-          <th>PHONE</th>
-          <th>POSITION</th>
-          <th>STATUS</th>
-    </tr>
-  
-    {% for row in affiliates %}
-    <tr>
-      {% for col in row %}
-      <td>{{ col }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
+  <div class="row">
+    <div class="column">
+      <h2>Affiliates</h2>
+      <a class="button" href="mailto:{% for aff in affiliates %}
+      {{ aff.email }},
+       {% endfor %}">Email Affiliates:</a> {% for aff in affiliates %}
+       {{ aff.email }},
+        {% endfor %}
+      <table>
+        <tr>
+              <th>AFF_ID</th>
+              <th>EVENT_ID</th>
+              <th>NAME</th>
+              <th>EMAIL</th>
+              <th>PHONE</th>
+              <th>POSITION</th>
+              <th>STATUS</th>
+        </tr>
+      
+        {% for row in affiliates %}
+        <tr>
+          {% for col in row %}
+          <td>{{ col }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="column">
+      <h2>Invite Affiliates</h2>
+      <form action="{{ url_for('add_affiliate', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <p> Name: <input type = "text" name = "name" required/></p>
+        <p> Email: <input type = "text" name = "email" required/></p>
+        <p> Phone: <input type = "text" name = "phone" required/></p>
+        <label for="position"> Position: </label>
+        <select name="position" id="position">
+          <option value="Attendee">Attendee</option>
+          <option value="Moderator">Moderator</option>
+          <option value="Speaker">Speaker</option>
+        </select>
+        <label for="status"> Status: </label>
+        <select name="status" id="status">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Maybe">Maybe</option>
+        </select>
+        <p><button type="submit">Submit</button></p></form>
+    </div>
+    <div class="column">
+      <h2>Update Invite or Status</h2>
+      <form action="{{ url_for('update_affiliate', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <p> Affiliate ID: <input type="text" name = "aff_id" /></p>
+        <p> Name: <input type = "text" name = "name" /></p>
+        <p> Email: <input type = "text" name = "email" /></p>
+        <p> Phone: <input type = "text" name = "phone" /></p>
+        <label for="position"> Position: </label>
+        <select name="position" id="position">
+          <option value="Attendee">Attendee</option>
+          <option value="Moderator">Moderator</option>
+          <option value="Speaker">Speaker</option>
+        </select>
+        <label for="status"> Status: </label>
+        <select name="status" id="status">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Maybe">Maybe</option>
+        </select>
+        <p><button type="submit">Submit</button></p></form>
+    </div>
+  </div>
+
 
 
 {% endfor %}
