@@ -460,7 +460,7 @@ def add_affiliate(event_id):
     # generate aff_id
     select_query = "SELECT max(aff_id) FROM affiliates"
     cursor = g.conn.execute(text(select_query))
-    fin_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
+    aff_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
 
     # add affiliate to affiliates table
     select_query = "INSERT INTO affiliates (aff_id, event_id, name, email, phone, position, status) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (aff_id, event_id, name, email, phone, position, status)
