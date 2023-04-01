@@ -487,7 +487,7 @@ def update_affiliate(event_id):
         phone = request.form.get("phone")
         position = request.form.get("position")
         status = request.form.get("status")
-        select_query = "UPDATE affiliate SET name = '%s', email = '%s', phone = '%s', position = '%s', status = '%s' WHERE aff_id = '%s' and event_id = '%s'" % (name, email, phone, position, status, aff_id, event_id)
+        select_query = "UPDATE affiliates SET name = '%s', email = '%s', phone = '%s', position = '%s', status = '%s' WHERE aff_id = '%s' and event_id = '%s'" % (name, email, phone, position, status, aff_id, event_id)
         print(select_query)
         g.conn.execute(text(select_query))
         g.conn.commit()
