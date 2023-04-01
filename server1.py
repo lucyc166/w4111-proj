@@ -406,6 +406,48 @@ def update_expense(event_id):
 
     return redirect("/event/%s" % (event_id))
 
+
+@app.route('/<event_id>/add_financier', methods=["GET", "POST"])
+def add_financier(event_id):
+    financier_email = request.form.get("financier_email")
+    company = request.form.get("company")
+    amount_sponsored = request.form.get("amount_sponsored")
+
+    # generate fin_id
+    select_query = "SELECT max(fin_id) FROM financiers"
+    cursor = g.conn.execute(text(select_query))
+    fin_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
+
+    # add financier to financier table
+    select_query = "INSERT INTO financiers (fin_id, event_id, financier_email, company, amount_sponsored) VALUES ('%s', '%s', '%s', '%s', '%s')" % (fin_id, event_id, financier_email, company, amount_sponsored)
+    print(select_query)
+    g.conn.execute(text(select_query))
+    g.conn.commit()
+
+    return redirect("/event/%s" % (event_id))
+
+
+@app.route('/<event_id>/update_financier', methods=["GET", "POST"])
+def update_financier(event_id):
+    fin_id = request.form.get("fin_id")
+
+    # delete financier
+    if request.form.get("delete_request_f") != None:
+        select_query = "DELETE from financiers WHERE fin_id = '%s' and event_id = '%s'" % (fin_id, event_id)
+        print(select_query)
+        g.conn.execute(text(select_query))
+        g.conn.commit()
+    else:
+        financier_email = request.form.get("financier_email")
+        company = request.form.get("company")
+        amount_sponsored = request.form.get("amount_sponsored")
+        select_query = "UPDATE financiers SET financier_email = '%s', company = '%s', amount_sponsored = '%s' WHERE fin_id = '%s' and event_id = '%s'" % (financier_email, company, amount_sponsored, fin_id, event_id)
+        print(select_query)
+        g.conn.execute(text(select_query))
+        g.conn.commit()
+
+    return redirect("/event/%s" % (event_id))
+
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
 def add():

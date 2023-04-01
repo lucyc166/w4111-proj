@@ -99,13 +99,34 @@
   <p></p>
 
 
-
-  <h2>Financiers</h2> 
-  <a class="button" href="mailto:{% for financier in financiers %}
+  <div class="row">
+    <div class="column">
+      <h2>Financiers</h2> 
+      <a class="button" href="mailto:{% for financier in financiers %}
   {{ financier.financier_email }},
    {% endfor %}">Email Financiers:</a> {% for financier in financiers %}
    {{ financier.financier_email }},
     {% endfor %}
+    </div>
+    <div class="column">
+      <h2>Add a Financier</h2>
+        <form action="{{ url_for('add_financier', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <p> Financier Email: <input type = "text" name = "financier_email" required/></p>
+        <p> Financier Company: <input type = "text" name = "company" required/></p>
+        <p> Amount Sponsored: <input type = "text" name = "amount_sponsored" required/></p>
+        <p><button type="submit">Submit</button></p></form>
+    </div>
+    <div class="column">
+      <h2>Update Financier Info</h2>
+        <form action="{{ url_for('update_financier', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <p> Financier ID: <input type = "text" name = "fin_id" required/></p>
+        <p> If you wish to delete this event, check the following box and fill the rest with N/A. <input type = "checkbox" name = "delete_request"/></p>
+        <p> Financier Email: <input type = "text" name = "financier_email" /></p>
+        <p> Financier Company: <input type = "text" name = "company" /></p>
+        <p> Amount Sponsored: <input type = "text" name = "amount_sponsored" /></p>
+        <p><button type="submit">Submit</button></p></form>
+    </div>
+  </div>
 
   <table>
     <tr>
