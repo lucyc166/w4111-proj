@@ -416,7 +416,7 @@ def add_financier(event_id):
     # generate fin_id
     select_query = "SELECT max(fin_id) FROM financiers"
     cursor = g.conn.execute(text(select_query))
-    fin_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
+    fin_id = str(int(cursor.fetchone()[0]) + 1).zfill(4) # fill with leading 0's [0001, 0002]
 
     # add financier to financier table
     select_query = "INSERT INTO financiers (fin_id, event_id, financier_email, company, amount_sponsored) VALUES ('%s', '%s', '%s', '%s', '%s')" % (fin_id, event_id, financier_email, company, amount_sponsored)
