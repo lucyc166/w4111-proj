@@ -10,7 +10,7 @@
 <a href="/">Log out</a>
 <a href="/hub">Return to user hub</a>
 {% for org in orgs %}
-<h2><a href="/org/{{org[0]}}">Return to {{ org[1] }}</a></h2>
+<a href="/org/{{org[0]}}">Return to {{ org[1] }}</a>
 {% endfor %}
 
 {% for event in events %}
