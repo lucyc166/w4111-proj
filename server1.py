@@ -175,6 +175,14 @@ def event_profile(event_id):
         events.append(result)
     print(events)
 
+    # grab org_id of event host
+    select_query = "SELECT * FROM organizations O JOIN hosts H ON O.org_id = H.org_id WHERE H.event_id = '%s'" % (event_id)
+    cursor = g.conn.execute(text(select_query))
+    print(select_query)
+    orgs = []
+    for result in cursor:
+        orgs.append(result)
+
     # grab expenses info from sql query
     select_query = "SELECT * FROM expenses WHERE event_id = '%s'" % (event_id)
     cursor = g.conn.execute(text(select_query))
@@ -205,7 +213,7 @@ def event_profile(event_id):
     for result in cursor:
         financiers.append(result)
     
-    return render_template("event_profile.html", events = events, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers)
+    return render_template("event_profile.html", events = events, orgs = orgs, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers)
 
 
 @app.route('/login_submit', methods =["GET", "POST"])

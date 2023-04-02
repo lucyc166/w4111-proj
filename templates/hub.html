@@ -12,7 +12,7 @@ The main content area of the homepage will have Future Events and Past Events, a
 
 {% block body %}
 <h3>Nav Bar: </h3>
-<p><a href="/">Return to welcome page</a></p>
+<p><a href="/">Log out</a></p>
 
 <h2>Welcome, {{ email }}!</h2>
 <!-- ** somewhere here, grab the user_id and use it to generate the query for orgs the user is affiliated with -->
@@ -26,7 +26,7 @@ The main content area of the homepage will have Future Events and Past Events, a
 <p><a href="/org/{{org[0]}}">{{ org[1] }}</a></p>
 {% endfor %}
 
-<p>Click an event to view the event details.</p>
+<p>Click an event to view or update the event details.</p>
 
 <h2>Your Upcoming Events</h2>
 
