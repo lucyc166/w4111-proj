@@ -25,9 +25,23 @@ This will have all of the links.
 --                                                                                                       __/ |          
 --                                                                                                      |___/           </pre>
 <h1>Welcome to the Columbia Event Management System!</h1>
-<h3>Visit the sites below</h3>
+
+<h3>Please log in below</h3>
+<form action="{{ url_for('login_submit') }}" method = "POST" > <!-- ** figure out what to put for action -->
+<p>Email: <input type="text" name = "email" /></p>
+<p>Password: <input type="password" name = "password"/></p>
+<p><button type="submit">Submit</button></p>
+</form>
+{{ access }}
+
+<p>Here's a user login you can use:</p>
+<p>j.smith@columbia.edu</p>
+<p>S2w!uY#8mL</p>
+<p>Another:</p>
+<p>	a.garcia@columbia.edu</p>
+<p>K9s@fT6bQ</p>
+
 <p><a href="admin">Go to the admin page</a></p>
-<p><a href="login">Go to the login page</a></p>
 <p><a href="hub">Go to the user hub</a></p>
 
 {% endblock %}
