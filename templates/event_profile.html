@@ -87,17 +87,16 @@
     </div>
 
   {% if {{ event.datetime_start }} &gt; {{ now }} %}
-    {{
     <div class="column">
         <h2>Add an Expense</h2>
-        <form action="url_for('add_expense', event_id = event.event_id)" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <form action="{{ url_for('add_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Item Name: <input type = "text" name = "item_name" required/></p>
         <p> Item Cost: <input type = "text" name = "cost" required/></p>
         <p><button type="submit">Submit</button></p></form>
     </div>
     <div class="column">
         <h2>Update an Expense</h2>
-        <form action="url_for('update_expense', event_id = event.event_id)" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <form action="{{ url_for('update_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Item ID: <input type = "text" name = "item_id" required/></p>
         <p> If you wish to delete this expense, check the following box. <input type = "checkbox" name = "delete_request"/></p>
         <p> Item Name: <input type = "text" name = "item_name" /></p>
@@ -106,7 +105,6 @@
     </div>
   </div>
 
-}}
 {% endif %}
 
 
@@ -138,10 +136,10 @@
     </div>
 
     {% if {{ event.datetime_start }} &gt; {{ now }} %}
-    {{
+
     <div class="column">
       <h2>Add a Financier</h2>
-        <form action="url_for('add_financier', event_id = event.event_id)" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <form action="{{ url_for('add_financier', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Financier Email: <input type = "text" name = "financier_email" required/></p>
         <p> Financier Company: <input type = "text" name = "company" required/></p>
         <p> Amount Sponsored: <input type = "text" name = "amount_sponsored" required/></p>
@@ -149,7 +147,7 @@
     </div>
     <div class="column">
       <h2>Update Financier Info</h2>
-        <form action="url_for('update_financier', event_id = event.event_id)" method = "POST"> <!--*** insert event id into this statement somehow-->
+        <form action="{{ url_for('update_financier', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Financier ID: <input type = "text" name = "fin_id" required/></p>
         <p> If you wish to delete this financier, check the following box. <input type = "checkbox" name = "delete_request_f"/></p>
         <p> Financier Email: <input type = "text" name = "financier_email" /></p>
@@ -157,7 +155,6 @@
         <p> Amount Sponsored: <input type = "text" name = "amount_sponsored" /></p>
         <p><button type="submit">Submit</button></p></form>
     </div>
-    }}
     {% endif %}
 
   </div>
@@ -196,7 +193,6 @@
     </div>
 
     {% if {{ event.datetime_start }} &gt; {{ now }} %}
-    {{
 
     <div class="column">
       <h2>Invite Affiliates</h2>
@@ -220,7 +216,7 @@
     </div>
     <div class="column">
       <h2>Update Invite or Status</h2>
-      <form action="url_for('update_affiliate', event_id = event.event_id)" method = "POST"> <!--*** insert event id into this statement somehow-->
+      <form action="{{ url_for('update_affiliate', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
         <p> Affiliate ID: <input type="text" name = "aff_id" /></p>
         <p> If you wish to delete this affiliate, check the following box. <input type = "checkbox" name = "delete_request_a"/></p>
         <p> Name: <input type = "text" name = "name" /></p>
@@ -241,7 +237,6 @@
         <p><button type="submit">Submit</button></p></form>
     </div>
 
-  }}
   {% endif %}
   </div>
 
