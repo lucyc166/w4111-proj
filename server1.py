@@ -302,7 +302,7 @@ def add_org():
     marketing_email = "'%s'" % (request.form.get("marketing_email")) if request.form.get("marketing_email") != "" else "NULL"
     comms_email = "'%s'" % (request.form.get("comms_email")) if request.form.get("comms_email") != "" else "NULL"
     finance_email = "'%s'" % (request.form.get("finance_email")) if request.form.get("finance_email") != "" else "NULL"
-    advisor_email = "'%s'" % (request.form.get("advisor_email")) if request.form.get("advisor_email") != "" else "NULL"
+    advisor_email = request.form.get("advisor_email")
 
     # new org_id is highest org_id + 1
     select_query = "SELECT max(org_id) FROM organizations"
