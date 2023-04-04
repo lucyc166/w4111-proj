@@ -297,19 +297,12 @@ def admin():
 def add_org():
     # accessing form inputs from user
     org_name = request.form.get("org_name")
-    org_desc = request.form.get("org_desc")
+    org_desc = "'%s'" % (request.form.get("org_desc")) if request.form.get("org_desc") != "" else "None"
     org_email = request.form.get("org_email")
     marketing_email = request.form.get("marketing_email")
     comms_email = request.form.get("comms_email")
     finance_email = request.form.get("finance_email")
     advisor_email = request.form.get("advisor_email")
-    '''
-    org_info = []
-    org_info.extend[org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email]
-    for i in range(len(org_info)):
-        if org_info[i] == "":
-            org_info[i] = null
-   '''
 
     # new org_id is highest org_id + 1
     select_query = "SELECT max(org_id) FROM organizations"
@@ -317,7 +310,7 @@ def add_org():
     org_id = str(int(cursor.fetchone()[0]) + 1).zfill(4) # fill with leading 0's [0001, 0002]
 
     # query to add org to organizations table
-    select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
+    select_query = "INSERT INTO organizations (org_id, org_name, org_description, org_email, marketing_email, comms_email, finance_email, advisor_email) VALUES ('%s', %s, '%s', '%s', '%s', '%s', '%s', '%s')" % (org_id, org_name, org_desc, org_email, marketing_email, comms_email, finance_email, advisor_email)
     print(select_query)
     g.conn.execute(text(select_query))
     g.conn.commit()
