@@ -326,14 +326,14 @@ def add_org():
 @app.route('/org/<org_id>', methods=["GET", "POST"])
 def add_event(org_id):
     title = request.form.get("title")
-    description = request.form.get("description")
-    location = request.form.get("location")
-    datetime_start = request.form.get("datetime_start")
-    datetime_end = request.form.get("datetime_end")
-    budget = request.form.get("budget")
-    liason_name = request.form.get("liason_name")
-    liason_email = request.form.get("liason_email")
-    approved = request.form.get("approved")
+    description = "'%s'" % (request.form.get("description")) if request.form.get("description") != "" else "NULL"
+    location = "'%s'" % (request.form.get("location")) if request.form.get("location") != "" else "NULL"
+    datetime_start = "'%s'" % (request.form.get("datetime_start")) if request.form.get("datetime_start") != "" else "NULL"
+    datetime_end = "'%s'" % (request.form.get("datetime_end")) if request.form.get("datetime_end") != "" else "NULL"
+    budget = "'%s'" % (request.form.get("budget")) if request.form.get("budget") != "" else "NULL"
+    liason_name = "'%s'" % (request.form.get("liason_name")) if request.form.get("liason_name") != "" else "NULL"
+    liason_email = "'%s'" % (request.form.get("liason_email")) if request.form.get("liason_email") != "" else "NULL"
+    approved = "'%s'" % (request.form.get("approved")) if request.form.get("approved") != "" else "NULL"
 
     # new event_id is highest event_id + 1
     select_query = "SELECT max(event_id) FROM events"
@@ -341,7 +341,7 @@ def add_event(org_id):
     event_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
 
     # query to add event to events table
-    select_query = "INSERT INTO events (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget)
+    select_query = "INSERT INTO events (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget) VALUES ('%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s)" % (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget)
     print(select_query)
     g.conn.execute(text(select_query))
     g.conn.commit()
@@ -369,7 +369,7 @@ def add_expense(event_id):
     item_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
 
     # query to add org to expenses table
-    select_query = "INSERT INTO expenses (item_id, event_id, item_name, cost) VALUES ('%s', '%s', '%s', '%s')" % (item_id, event_id, item_name, cost)
+    select_query = "INSERT INTO expenses (item_id, event_id, item_name, cost) VALUES ('%s', '%s', %s, %s)" % (item_id, event_id, item_name, cost)
     print(select_query)
     g.conn.execute(text(select_query))
     g.conn.commit()
