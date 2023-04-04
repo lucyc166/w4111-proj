@@ -31,13 +31,13 @@ The main content area of the homepage will have Future Events and Past Events, a
 <h2>Your Upcoming Events</h2>
 
 {% for event in future_events %}
-<p><a href="/event/{{event[0]}}">{{ event[1] }}</a> &emsp | &emsp {{ event[2] }}</p>
+<p><a href="/event/{{event[0]}}">{{ event[1] }}</a> &emsp; | &emsp; {{ event[2] }}</p>
 {% endfor %}
 
 <h2>Your Past Events</h2>
 
 {% for event in past_events %}
-<p><a href="/event/{{event[0]}}">{{ event[1] }}</a> &emsp | &emsp {{ event[2] }}</p>
+<p><a href="/event/{{event[0]}}">{{ event[1] }}</a> &emsp; | &emsp; {{ event[2] }}</p>
 {% endfor %}
 
 
