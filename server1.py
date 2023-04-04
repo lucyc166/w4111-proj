@@ -14,7 +14,6 @@ import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
-from datetime import datetime
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -214,10 +213,7 @@ def event_profile(event_id):
     for result in cursor:
         financiers.append(result)
     
-    # current date
-    now = datetime.now()
-    
-    return render_template("event_profile.html", events = events, orgs = orgs, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers, now = now)
+    return render_template("event_profile.html", events = events, orgs = orgs, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers)
 
 
 @app.route('/login_submit', methods =["GET", "POST"])
@@ -334,7 +330,7 @@ def add_event(org_id):
     location = "'%s'" % (request.form.get("location")) if request.form.get("location") != "" else "NULL"
     datetime_start = "'%s'" % (request.form.get("datetime_start")) if request.form.get("datetime_start") != "" else "NULL"
     datetime_end = "'%s'" % (request.form.get("datetime_end")) if request.form.get("datetime_end") != "" else "NULL"
-    budget = "'%s'" % (request.form.get("budget")) if request.form.get("budget") != "" else "NULL"
+    budget = "%s" % (request.form.get("budget")) if request.form.get("budget") != "" else "NULL"
     liason_name = "'%s'" % (request.form.get("liason_name")) if request.form.get("liason_name") != "" else "NULL"
     liason_email = "'%s'" % (request.form.get("liason_email")) if request.form.get("liason_email") != "" else "NULL"
     approved = "'%s'" % (request.form.get("approved")) if request.form.get("approved") != "" else "NULL"
@@ -355,7 +351,7 @@ def add_event(org_id):
     g.conn.execute(text(select_query))
     g.conn.commit()
 
-    return redirect('/hub')
+    return redirect('/org/<org_id>')
 
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
