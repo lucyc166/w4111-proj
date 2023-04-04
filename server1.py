@@ -148,14 +148,14 @@ def org_profile(org_id):
     print(result)	
 
     # grab PAST events affiliated with org
-    select_query = "SELECT E.event_id, E.title, E.approved, E.liason_name, E.liason_email, E.description, E.location, E.datetime_start, E.datetime_end, E.budget FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s' and E.datetime_start <= now() ORDER BY E.datetime_start" % (org_id)
+    select_query = "SELECT * FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s' and E.datetime_start <= now() ORDER BY E.datetime_start" % (org_id)
     cursor = g.conn.execute(text(select_query))
     past_events = []
     for result in cursor:
         past_events.append(result)
     
     # FUTURE events
-    select_query = "SELECT E.event_id, E.title, E.approved, E.liason_name, E.liason_email, E.description, E.location, E.datetime_start, E.datetime_end, E.budget FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s' and E.datetime_start > now() ORDER BY E.datetime_start" % (org_id)
+    select_query = "SELECT * FROM events E, hosts H WHERE E.event_id = H.event_id and H.org_id = '%s' and E.datetime_start > now() ORDER BY E.datetime_start" % (org_id)
     cursor = g.conn.execute(text(select_query))
     future_events = []
     for result in cursor:

@@ -62,9 +62,29 @@
 </table>
 
 
+{% if event.datetime_start  >=  now  %}
 
-
-
+<div class="row">
+  <div class="column">
+    <h2>Update Event</h2>
+    <form action="{{ url_for('update_event', event_id = event.event_id) }}" method = "POST">
+      <p> Event Title: <span>*</span> <input type = "text" name = "title" value = "{{ event.title }}" required/></p>
+      <p> Event Description: <textarea rows = "4" cols = "50" name = "description" value = "{{ event.description }}"></textarea></p>
+      <p> Location: <input type = "text" name = "location" value = "{{ event.location }}"/></p>
+      <p> Start Time: <input type = "datetime-local" name = "datetime_start" value = "{{ event.datetime_start }}"/></p>
+      <p> End Time: <input type = "datetime-local" name = "datetime_end" value = "{{ event.datetime_end }}"/></p>
+      <p> Budget: <input type = "text" name = "budget" value = "{{ event.budget }}"/></p>
+      <p> Liason Name: <input type = "text" name = "liason_name" value = "{{ event.liason_name }}"/></p>
+      <p> Liason Email: <input type = "text" name = "liason_email" value = "{{ event.liason_email }}"/></p>
+      <label for="approved"> Approval Status: </label>
+              <select name="approved" id="approved">
+                <option value="True">True</option>
+                <option value="False">False</option>
+              </select>
+    <p><button type="submit">Submit</button></p></form>
+  </div>
+</div>
+{% endif %}
 
 <div class="row">
     <div class="column">
@@ -88,24 +108,7 @@
     </div>
 
   {% if event.datetime_start  >=  now  %}
-  <div class="column">
-    <h2>Update Event</h2>
-    <form action="{{ url_for('update_event', event_id = event.event_id) }}" method = "POST">
-      <p> Event Title: <span>*</span> <input type = "text" name = "title" value = "{{ event.title }}" required/></p>
-      <p> Event Description: <textarea rows = "4" cols = "50" name = "description" value = "{{ event.description }}"></textarea></p>
-      <p> Location: <input type = "text" name = "location" value = "{{ event.location }}"/></p>
-      <p> Start Time: <input type = "datetime-local" name = "datetime_start" value = "{{ event.datetime_start }}"/></p>
-      <p> End Time: <input type = "datetime-local" name = "datetime_end" value = "{{ event.datetime_end }}"/></p>
-      <p> Budget: <input type = "text" name = "budget" value = "{{ event.budget }}"/></p>
-      <p> Liason Name: <input type = "text" name = "liason_name" value = "{{ event.liason_name }}"/></p>
-      <p> Liason Email: <input type = "text" name = "liason_email" value = "{{ event.liason_email }}"/></p>
-      <label for="approved"> Approval Status: </label>
-              <select name="approved" id="approved">
-                <option value="True">True</option>
-                <option value="False">False</option>
-              </select>
-    <p><button type="submit">Submit</button></p></form>
-  </div>
+  
     <div class="column">
         <h2>Add an Expense</h2>
         <form action="{{ url_for('add_expense', event_id = event.event_id) }}" method = "POST">
