@@ -297,7 +297,7 @@ def admin():
 def add_org():
     # accessing form inputs from user
     org_name = request.form.get("org_name")
-    org_desc = "'%s'" % (request.form.get("org_desc")) if request.form.get("org_desc") != "" else "None"
+    org_desc = "'%s'" % (request.form.get("org_desc")) if request.form.get("org_desc") != "" else "NULL"
     org_email = request.form.get("org_email")
     marketing_email = request.form.get("marketing_email")
     comms_email = request.form.get("comms_email")
