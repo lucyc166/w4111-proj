@@ -46,17 +46,6 @@ Email Organization:</a> {{org.org_email}}, {{ org.marketing_email }}, {{ org.com
   </table>
 
 
-  <h2>Update Organization</h2>
-  <form action="{{ url_for('add_org') }}" method = "POST"><!-- ** figure out what to put for action -->
-  <p> Organization Name: <span>*</span> <input type = "text" name = "org_name" value = "{{ org.org_name }}" required/></p>
-  <p> Organization Description: <textarea rows = "4" cols = "50" name = "org_desc" value = "{{ org.org_description }}"></textarea></p>
-  <p> Organization Email: <input type = "text" name = "org_email" value = "{{ org.org_email }}"/></p>
-  <p> Marketing Email: <input type = "text" name = "marketing_email" value = "{{ org.marketing_email }}"/></p>
-  <p> Comms Email: <input type = "text" name = "comms_email" value = "{{ org.comms_email }}"/></p>
-  <p> Finance Email: <input type = "text" name = "finance_email" value = "{{ org.finance_email }}"/></p>
-  <p> Advisor Email: <span>*</span><input type = "text" name = "advisor_email" value = "{{ org.advisor_email }}" required/></p>
-  <p><button type="submit">Submit</button></p>
-
 <h1>Upcoming Events</h1>
 
 {% for event in future_events %}
