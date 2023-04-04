@@ -7,8 +7,8 @@
 {% block body %}
 <!--insert event information here in a table format-->
 
-<a href="/">Log out</a>
-<a href="/hub">Return to user hub</a>
+<p><a href="/">Log out</a> &emsp;
+<a href="/hub">Return to user hub</a></p>
 {% for org in orgs %}
 <a href="/org/{{org[0]}}">Return to {{ org[1] }}</a>
 {% endfor %}
@@ -85,6 +85,9 @@
           {% endfor %}
         </table>
     </div>
+
+    {% if {{ event.datetime_start }} &lt; {{ now }} %}
+    {{
     <div class="column">
         <h2>Add an Expense</h2>
         <form action="{{ url_for('add_expense', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
@@ -103,7 +106,8 @@
     </div>
   </div>
 
-  <p></p>
+}}
+{% endif %}
 
 
   <div class="row">
@@ -132,6 +136,9 @@
       {% endfor %}
     </table>
     </div>
+
+    {% if {{ event.datetime_start }} &lt; {{ now }} %}
+    {{
     <div class="column">
       <h2>Add a Financier</h2>
         <form action="{{ url_for('add_financier', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
@@ -150,6 +157,9 @@
         <p> Amount Sponsored: <input type = "text" name = "amount_sponsored" /></p>
         <p><button type="submit">Submit</button></p></form>
     </div>
+  }}
+    {% endif %}
+
   </div>
 
 
@@ -184,6 +194,10 @@
         {% endfor %}
       </table>
     </div>
+
+    {% if {{ event.datetime_start }} &lt; {{ now }} %}
+    {{
+
     <div class="column">
       <h2>Invite Affiliates</h2>
       <form action="{{ url_for('add_affiliate', event_id = event.event_id) }}" method = "POST"> <!--*** insert event id into this statement somehow-->
@@ -226,6 +240,9 @@
         </select>
         <p><button type="submit">Submit</button></p></form>
     </div>
+
+  }}
+  {% endif %}
   </div>
 
 
