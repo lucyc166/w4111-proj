@@ -14,6 +14,7 @@ import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
+from datetime import datetime
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -213,7 +214,10 @@ def event_profile(event_id):
     for result in cursor:
         financiers.append(result)
     
-    return render_template("event_profile.html", events = events, orgs = orgs, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers)
+    # current date
+    now = datetime.now()
+    
+    return render_template("event_profile.html", events = events, orgs = orgs, expenses = expenses, total_expense = total_expense, affiliates = affiliates, financiers = financiers, now = now)
 
 
 @app.route('/login_submit', methods =["GET", "POST"])
