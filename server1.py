@@ -114,13 +114,13 @@ def hub():
     print(orgs)
     
     # grab PAST events affiliated with orgs that are affiliated with the user
-    select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s' and E.datetime_start <= now() order by E.datetime_start" % (user_id)
+    select_query = "SELECT E.event_id, E.title, O.org_name FROM events E, hosts H, affiliated_with A, organizations O WHERE E.event_id = H.event_id and H.org_id = A.org_id and H.org_id = O.org_id and A.user_id = '%s' and E.datetime_start <= now() order by E.datetime_start" % (user_id)
     cursor = g.conn.execute(text(select_query))
     past_events = []
     for result in cursor:
         past_events.append(result)
     # FUTURE events
-    select_query = "SELECT E.event_id, E.title FROM events E, hosts H, affiliated_with A WHERE E.event_id = H.event_id and H.org_id = A.org_id and A.user_id = '%s' and E.datetime_start > now() order by E.datetime_start" % (user_id)
+    select_query = "SELECT E.event_id, E.title, O.org_name FROM events E, hosts H, affiliated_with A, organizations O WHERE E.event_id = H.event_id and H.org_id = A.org_id and H.org_id = O.org_id and A.user_id = '%s' and E.datetime_start > now() order by E.datetime_start" % (user_id)
     cursor = g.conn.execute(text(select_query))
     future_events = []
     for result in cursor:
