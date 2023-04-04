@@ -88,7 +88,7 @@
         </table>
     </div>
 
-  {% if event.datetime_start  &gt;  now  %}
+  {% if event.datetime_start  >=  now  %}
     <div class="column">
         <h2>Add an Expense</h2>
         <form action="{{ url_for('add_expense', event_id = event.event_id) }}" method = "POST">
@@ -137,7 +137,7 @@
     </table>
     </div>
 
-    {% if event.datetime_start &gt; now %}
+    {% if event.datetime_start >= now %}
 
     <div class="column">
       <h2>Add a Financier</h2>
@@ -194,7 +194,7 @@
       </table>
     </div>
 
-    {% if event.datetime_start &gt; now %}
+    {% if event.datetime_start >= now %}
 
     <div class="column">
       <h2>Invite Affiliates</h2>
