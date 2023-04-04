@@ -86,7 +86,7 @@
         </table>
     </div>
 
-    {% if {{ event.datetime_start }} &lt; {{ now }} %}
+    {% if {{ event.datetime_start }} &gt; {{ now }} %}
     {{
     <div class="column">
         <h2>Add an Expense</h2>
@@ -137,7 +137,7 @@
     </table>
     </div>
 
-    {% if {{ event.datetime_start }} &lt; {{ now }} %}
+    {% if {{ event.datetime_start }} &gt; {{ now }} %}
     {{
     <div class="column">
       <h2>Add a Financier</h2>
@@ -195,7 +195,7 @@
       </table>
     </div>
 
-    {% if {{ event.datetime_start }} &lt; {{ now }} %}
+    {% if {{ event.datetime_start }} &gt; {{ now }} %}
     {{
 
     <div class="column">
