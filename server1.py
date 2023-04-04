@@ -358,6 +358,27 @@ def add_event(org_id):
     return redirect(("/org/%s") % (org_id))
 
 
+@app.route('/<event_id>/update_event', methods=["GET", "POST"])
+def update_event(event_id):
+    title = request.form.get("title")
+    description = "'%s'" % (request.form.get("description")) if request.form.get("description") != "" else "NULL"
+    location = "'%s'" % (request.form.get("location")) if request.form.get("location") != "" else "NULL"
+    datetime_start = "'%s'" % (request.form.get("datetime_start")) if request.form.get("datetime_start") != "" else "NULL"
+    datetime_end = "'%s'" % (request.form.get("datetime_end")) if request.form.get("datetime_end") != "" else "NULL"
+    budget = "%s" % (request.form.get("budget")) if request.form.get("budget") != "" else "NULL"
+    liason_name = "'%s'" % (request.form.get("liason_name")) if request.form.get("liason_name") != "" else "NULL"
+    liason_email = "'%s'" % (request.form.get("liason_email")) if request.form.get("liason_email") != "" else "NULL"
+    approved = "'%s'" % (request.form.get("approved")) if request.form.get("approved") != "" else "NULL"
+
+    # query to update event in events table
+    select_query = "UPDATE events SET title = '%s', approved = '%s', liason_name = '%s', liason_email = '%s', description = '%s', location = '%s', datetime_start = '%s', datetime_end = '%s', budget = '%s' WHERE event_id = '%s'" % (title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget, event_id)
+    print(select_query)
+    g.conn.execute(text(select_query))
+    g.conn.commit()
+
+    return redirect("/event/%s" % (event_id))
+
+
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
 # add expenses form
 @app.route('/<event_id>/add_expense', methods=["GET", "POST"])
