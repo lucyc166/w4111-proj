@@ -340,7 +340,7 @@ def add_event(org_id):
     cursor = g.conn.execute(text(select_query))
     event_id = str(int(cursor.fetchone()[0]) + 1).zfill(5) # fill with leading 0's [0001, 0002]
 
-    # query to add event to events table
+    # query to add event to events tableç
     select_query = "INSERT INTO events (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget) VALUES ('%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s)" % (event_id, title, approved, liason_name, liason_email, description, location, datetime_start, datetime_end, budget)
     print(select_query)
     g.conn.execute(text(select_query))
@@ -351,7 +351,7 @@ def add_event(org_id):
     g.conn.execute(text(select_query))
     g.conn.commit()
 
-    return redirect('/org/<org_id>')
+    return redirect('/org/org_id')
 
 
 ## ** Figure how to link this to the event_id of the event it's affiliated with !!!
