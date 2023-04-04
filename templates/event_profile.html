@@ -15,6 +15,7 @@
 
 {% for event in events %}
 <h2>{{ event.title }}</h2>
+<p>{{ org[1] }}</p>
 
 <p>Total Budget: ${{ event.budget }}     | Total Cost: ${{ total_expense or 0 }}     |      Funds Remaining: ${% if total_expense%}
     {{event.budget - total_expense}}
